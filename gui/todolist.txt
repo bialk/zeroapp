@@ -1,0 +1,4 @@
+
+ - Texture Albedo calculation
+ - Fast linear solver for shape reconstruction (similar to the autokeying)
+

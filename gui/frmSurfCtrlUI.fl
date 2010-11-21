@@ -1,0 +1,147 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0107 
+header_name {.h} 
+code_name {.cxx}
+class frmSurfCtrlUI {open
+} {
+  decl {public:} {}
+  Function {frmSurfCtrlUI()} {open
+  } {
+    Fl_Window pnl {open
+      xywh {344 263 175 265} type Double resizable visible
+    } {
+      Fl_Box {} {
+        xywh {20 10 135 80} box PLASTIC_UP_FRAME
+      }
+      Fl_Check_Button viewsurf_show {
+        label show
+        xywh {25 20 60 15} down_box DOWN_BOX
+      }
+      Fl_Check_Button viewsurf_clipplane {
+        label {clip plane}
+        xywh {25 35 85 15} down_box DOWN_BOX
+      }
+      Fl_Check_Button viewsurf_norms {
+        label {norms smooth}
+        xywh {25 50 120 15} down_box DOWN_BOX
+      }
+      Fl_Check_Button viewsurf_texture {
+        label texture
+        xywh {25 65 120 15} down_box DOWN_BOX
+      }
+      Fl_Box {} {
+        xywh {20 105 135 135} box PLASTIC_UP_FRAME
+      }
+      Fl_Button btn_slota {
+        label {slot A}
+        xywh {35 120 45 20}
+      }
+      Fl_Button btn_slotb {
+        label {slot B}
+        xywh {100 120 45 20}
+      }
+      Fl_Button btn_slotc {
+        label {slot C}
+        xywh {35 145 45 20}
+      }
+      Fl_Button btn_slotd {
+        label {slot D}
+        xywh {100 145 45 20}
+      }
+      Fl_Button btn_slote {
+        label {slot E}
+        xywh {35 170 45 20}
+      }
+      Fl_Button btn_slotf {
+        label {slot F}
+        callback {;}
+        xywh {100 170 45 20}
+      }
+      Fl_Button btn_edit_slot_links {
+        label {Edit Slot Links}
+        xywh {30 200 115 20}
+      }
+    }
+  }
+} 
+
+class frmEditSlotLinks {open
+} {
+  decl {public:} {}
+  Function {frmEditSlotLinks()} {open
+  } {
+    Fl_Window pnl {
+      label {Edit Slot Links} open selected
+      xywh {323 57 225 345} type Double resizable modal visible
+    } {
+      Fl_File_Input edit_slotfilea {
+        label A
+        xywh {30 15 150 30}
+      }
+      Fl_Button btn_slotfilea {
+        label {...}
+        xywh {185 20 25 25}
+      }
+      Fl_File_Input edit_slotfileb {
+        label {B:}
+        xywh {30 45 150 30}
+      }
+      Fl_Button btn_slotfileb {
+        label {...}
+        xywh {185 50 25 25}
+      }
+      Fl_File_Input edit_slotfilec {
+        label {C:}
+        xywh {30 75 150 30}
+      }
+      Fl_Button btn_slotfilec {
+        label {...}
+        xywh {185 80 25 25}
+      }
+      Fl_File_Input edit_slotfiled {
+        label {D:}
+        xywh {30 105 150 30}
+      }
+      Fl_Button btn_slotfiled {
+        label {...}
+        xywh {185 110 25 25}
+      }
+      Fl_File_Input edit_slotfilee {
+        label {E:}
+        xywh {30 135 150 30}
+      }
+      Fl_Button btn_slotfilee {
+        label {...}
+        xywh {185 140 25 25}
+      }
+      Fl_File_Input edit_slotfilef {
+        label {F:}
+        xywh {30 165 150 30}
+      }
+      Fl_Button btn_slotfilef {
+        label {...}
+        xywh {185 170 25 25}
+      }
+      Fl_Button btn_editslots_close {
+        label Close
+        xywh {75 305 80 25}
+      }
+      Fl_File_Input edit_surftxtrfile {
+        label {Texture file:}
+        xywh {15 220 165 30} align 5
+      }
+      Fl_Button btn_surftxtrfile {
+        label {...}
+        xywh {185 225 25 25}
+      }
+      Fl_File_Input edit_surftxtrmapfile {
+        label {Texture mapping file:}
+        xywh {15 265 165 30} align 5
+      }
+      Fl_Button btn_surftxtrmapfile {
+        label {...}
+        xywh {185 270 25 25}
+      }
+    }
+  }
+} 

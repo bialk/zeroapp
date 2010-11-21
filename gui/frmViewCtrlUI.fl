@@ -1,0 +1,88 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0107 
+header_name {.h} 
+code_name {.cxx}
+class frmViewCtrlUI {open
+} {
+  decl {public:} {}
+  Function {frmViewCtrlUI()} {open
+  } {
+    Fl_Window pnl {open
+      xywh {336 261 185 335} type Double resizable visible
+    } {
+      Fl_Box {} {
+        xywh {20 25 145 80} box PLASTIC_UP_FRAME
+      }
+      Fl_Check_Button backgrnd {
+        label background
+        xywh {25 35 100 15} down_box DOWN_BOX
+      }
+      Fl_Check_Button showtool {
+        label {show tools}
+        xywh {25 50 95 15} down_box DOWN_BOX
+      }
+      Fl_Check_Button drawsimple {
+        label {draw simple}
+        xywh {25 65 100 15} down_box DOWN_BOX
+      }
+      Fl_Check_Button orthoprojection {
+        label {orthogonal proj.}
+        xywh {25 80 125 15} down_box DOWN_BOX
+      }
+      Fl_Box {} {
+        label {Zoom:}
+        xywh {20 110 145 40} box PLASTIC_UP_FRAME align 20
+      }
+      Fl_Button zoom_plus {
+        label {-}
+        xywh {110 120 20 20}
+      }
+      Fl_Button zoom_minus {
+        label {+}
+        xywh {135 120 20 20}
+      }
+      Fl_Box {} {
+        xywh {20 155 145 70} box PLASTIC_UP_FRAME
+      }
+      Fl_Choice animmethod {open
+        xywh {35 165 115 25} down_box BORDER_BOX align 16
+      } {
+        MenuItem {} {
+          label {360 (0,1,0)}
+          xywh {25 25 100 20}
+        }
+        MenuItem {} {
+          label {360(0,1,0.5)}
+          xywh {25 25 100 20}
+        }
+        MenuItem {} {
+          label {left-right}
+          xywh {25 25 100 20}
+        }
+      }
+      Fl_Button animstart {
+        label Start
+        xywh {95 195 55 25}
+      }
+      Fl_Box {} {
+        xywh {20 230 145 70} box PLASTIC_UP_FRAME
+      }
+      Fl_Check_Button light1 {
+        label {light 1}
+        xywh {25 240 70 20} down_box DOWN_BOX
+      }
+      Fl_Check_Button light2 {
+        label {light 2}
+        xywh {25 260 75 25} down_box DOWN_BOX
+      }
+      Fl_Light_Button do_not_hide {
+        label {do not hide}
+        xywh {0 0 185 20}
+      }
+      Fl_Button reset {
+        label Reset selected
+        xywh {55 310 80 20}
+      }
+    }
+  }
+} 

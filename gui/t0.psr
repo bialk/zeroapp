@@ -1,0 +1,107 @@
+<PsurgerySumlatorProject>
+ <ViewCtrl>
+ </ViewCtrl>
+ <Lights>
+ </Lights>
+ <ViewSurf>
+  <filemaptxtr>
+   
+  </filemaptxtr>
+  <filetexture>
+   
+  </filetexture>
+  <filesurfa>
+   
+  </filesurfa>
+  <filesurfb>
+   
+  </filesurfb>
+  <filesurfc>
+   
+  </filesurfc>
+  <filesurfd>
+   
+  </filesurfd>
+  <filesurfe>
+   
+  </filesurfe>
+  <filesurff>
+   
+  </filesurff>
+ </ViewSurf>
+ <ImagePlane>
+  <imagefname>
+   <size>
+    4
+   </size>
+   <item>
+    /home/alex/research/psurgery/data/photo/Gautam/107.ppm
+   </item>
+   <item>
+    /home/alex/research/psurgery/data/photo/Gautam/109.ppm
+   </item>
+   <item>
+    /home/alex/research/psurgery/data/photo/Gautam/112.ppm
+   </item>
+   <item>
+    /home/alex/research/psurgery/data/photo/Gautam/115.ppm
+   </item>
+  </imagefname>
+  <lights0>
+   <size>
+    3
+   </size>
+   <item>
+    1.762453e-01
+   </item>
+   <item>
+    -3.124877e-01
+   </item>
+   <item>
+    9.334286e-01
+   </item>
+  </lights0>
+  <lights1>
+   <size>
+    3
+   </size>
+   <item>
+    -1.942003e-01
+   </item>
+   <item>
+    -3.344778e-01
+   </item>
+   <item>
+    9.221772e-01
+   </item>
+  </lights1>
+  <lights2>
+   <size>
+    3
+   </size>
+   <item>
+    1.629527e-01
+   </item>
+   <item>
+    2.762154e-01
+   </item>
+   <item>
+    9.471807e-01
+   </item>
+  </lights2>
+  <lights3>
+   <size>
+    3
+   </size>
+   <item>
+    -2.131290e-01
+   </item>
+   <item>
+    2.719142e-01
+   </item>
+   <item>
+    9.384235e-01
+   </item>
+  </lights3>
+ </ImagePlane>
+</PsurgerySumlatorProject>

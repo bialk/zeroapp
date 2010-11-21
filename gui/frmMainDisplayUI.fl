@@ -1,0 +1,168 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0107 
+header_name {.h} 
+code_name {.cxx}
+widget_class GLDisplay {open
+  xywh {5 31 100 100} type Double align 80 resizable
+  code0 {\#include "apputil/eventballfltk.h"}
+  class Fl_Gl_Window noborder visible
+} {
+  decl {int handle(int event);} {public
+  }
+  decl {void draw(void);} {public
+  }
+} 
+
+widget_class MsgGroupUI {open
+  xywh {759 172 175 25} type Double
+  class Fl_Group visible position_relative
+} {
+  decl {int handle(int event);} {public
+  }
+} 
+
+decl {class frmMainDisplay;} {public
+} 
+
+class MainDisplay {open
+} {
+  decl {public:} {public
+  }
+  decl {frmMainDisplay *frmmaindisplay;} {public
+  }
+  Function {MainDisplay(frmMainDisplay *v)} {open
+  } {
+    code {frmmaindisplay = v;} {}
+    Fl_Window mainwnd {
+      label {3D Zero Application  0.0.1} open
+      xywh {234 144 780 550} type Double align 0 resizable
+      code0 {\#include <iostream>}
+      code1 {\#include <FL/Fl_Help_Dialog.h>}
+      code2 {\#include "dispview.h"} visible
+    } {
+      Fl_Menu_Bar mainmenu {open selected
+        xywh {0 0 595 25}
+      } {
+        Submenu menu_main {
+          label File open
+          xywh {0 0 63 20}
+        } {
+          MenuItem menu_new {
+            label New
+            xywh {0 0 30 20}
+          }
+          MenuItem menu_openproject {
+            label {Open Project}
+            xywh {0 0 30 20}
+          }
+          MenuItem menu_saveproject {
+            label {Save Project}
+            xywh {0 0 30 20} shortcut 0x40073 deactivate
+          }
+          MenuItem menu_saveproject_as {
+            label {Save Project As}
+            xywh {0 0 100 20}
+          }
+          MenuItem menu_exit {
+            label Exit
+            xywh {0 0 30 20} shortcut 0x80071 divider
+          }
+        }
+        Submenu {} {
+          label Help open
+          xywh {0 0 63 20}
+        } {
+          MenuItem menu_help {
+            label Help
+            xywh {0 0 100 20}
+          }
+          MenuItem menu_about {
+            label About
+            xywh {0 0 30 20}
+          }
+        }
+      }
+      Fl_Menu_Button popup {
+        xywh {50 60 15 15} type popup3 labeltype NO_LABEL hide
+      } {
+        MenuItem {} {
+          label item
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label item
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label item
+          xywh {0 0 30 20}
+        }
+      }
+      Fl_Box msggroupui {
+        xywh {595 0 185 25} box UP_BOX align 84
+        class MsgGroupUI
+      }
+      Fl_Group {} {open
+        xywh {0 25 30 525}
+      } {
+        Fl_Button {} {
+          image {../../../../../usr/share/pixmaps/comps/base-system.png} xywh {0 25 30 30}
+        }
+        Fl_Group {} {open
+          xywh {0 405 30 145} resizable
+        } {}
+      }
+      Fl_Group output {open
+        xywh {30 25 750 525} align 0 resizable
+        class GLDisplay
+      } {}
+    }
+    Fl_Window aboutwnd {
+      label {About 3D Plastic Surgery Simulator 0.3.0}
+      xywh {377 187 360 260} type Double modal visible
+    } {
+      Fl_Box aboutwndbox {
+        label {3D Zero Application ver. 0.1.0}
+        xywh {35 25 280 25} labelfont 1
+      }
+      Fl_Box {} {
+        label {Copyright 2005-2010 by Alex Blinov}
+        xywh {30 140 295 30}
+      }
+      Fl_Button btn_about_close {
+        label Close
+        xywh {140 210 65 25}
+      }
+      Fl_Box {} {
+        label {This program is based  in part on the work of the FLTK project (http://www.fltk.org).}
+        xywh {35 65 295 55} align 128
+      }
+      Fl_Box build {
+        label {Build }
+        xywh {40 170 295 30}
+      }
+    }
+    Fl_Window msgwnd {
+      label {Message Log} open
+      xywh {470 186 535 350} type Double resizable visible
+    } {
+      Fl_Text_Display msgdsp {
+        xywh {5 5 525 310}
+      }
+      Fl_Button btn_msgwnd_close {
+        label Close
+        xywh {460 320 70 25}
+      }
+    }
+  }
+  decl {Fl_Text_Buffer msgtb;} {public
+  }
+  decl {Fl_Help_Dialog help;} {public
+  }
+} 
+
+declblock {//header for sourcefile} {open public after {//end of headers}
+} {
+  decl {\#include "eventhnd.h"} {public
+  }
+} 
