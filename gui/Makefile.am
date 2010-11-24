@@ -18,10 +18,11 @@ lights.cpp lights.h\
 viewsurf.cpp viewsurf.h \
 imageplane.cpp imageplane.h \
 matting.cpp matting.h \
-shapefromshade.cpp shapefromshade.h normsfromshade.h\
-lineqsol.cpp\
+shapefromshade.cpp shapefromshade.h normsfromshade.h \
+lineqsol.cpp \
+ImageTile.cpp ImageTile.h \
 ../apputil/eventballfltk.cpp ../apputil/eventballfltk.h \
-fltk_calllist.cpp fltk_calllist.h fltk_animator.h fltk_defs.h\
+fltk_calllist.cpp fltk_calllist.h fltk_animator.h fltk_defs.h \
 frmMainDisplayUI.cxx frmMainDisplayUI.h \
 frmMainDisplay.cpp frmMainDisplay.h \
 frmSurfCtrlUI.cxx frmSurfCtrlUI.h \

@@ -55,7 +55,8 @@ void ImagePlane::TreeScan(TSOCntx *cntx){
     imagefname[1].clear();
     imagefname[2].clear();
     imagefname[3].clear();
-    image_tex.clear();
+    //image_tex.clear();
+    image_tile.clear();
     w=h=0;
 
     data_attd.clear();
@@ -146,6 +147,7 @@ void ImagePlane::LoadTxt(int slot){
     return;    
   }
 
+  /*
   glBindTexture(GL_TEXTURE_RECTANGLE_ARB, image_tex());
      
   // set texture parameters 
@@ -159,6 +161,8 @@ void ImagePlane::LoadTxt(int slot){
 		  GL_TEXTURE_WRAP_T, GL_CLAMP); 
   // load rectangle texture
   glTexImage2D(GL_TEXTURE_RECTANGLE_ARB,0,GL_RGBA, w, h, 0, GL_BGRA,GL_UNSIGNED_BYTE,(GLvoid*)&img[slot][0] );
+  */
+  image_tile.LoadBGRA(&img[slot][0], w, h);
   
 }
 
@@ -201,15 +205,17 @@ void ImagePlane::Draw(DrawCntx *cntx){
 
   // draw image
   if(image_mode!=image_mode_off){
-    glDisable(GL_LIGHTING);
-    glEnable(GL_TEXTURE_RECTANGLE_ARB);
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-    glBindTexture(GL_TEXTURE_RECTANGLE_ARB, image_tex());
 
     if(cache_slot != curslot){
       cache_slot = curslot;
       LoadTxt(curslot);
     }
+
+    glDisable(GL_LIGHTING);
+    /*
+    glEnable(GL_TEXTURE_RECTANGLE_ARB);
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+    glBindTexture(GL_TEXTURE_RECTANGLE_ARB, image_tex());
 
     glColor4f(1,1,1,1);
     glBegin (GL_QUADS);  
@@ -223,6 +229,8 @@ void ImagePlane::Draw(DrawCntx *cntx){
     glVertex3f (0.0, h, 0.0);
     glEnd ();
     glDisable(GL_TEXTURE_RECTANGLE_ARB);
+    */
+    image_tile.Draw();
     glEnable(GL_LIGHTING);
   }
 
