@@ -13,13 +13,6 @@
 
 #include <vector>
 
-//line 1 git-test branch
-//line 2 git-test branch
-
-//add line 3 on master
-//add line 4 on master
-
-
 // test under git repository
 
 // class GLScene
