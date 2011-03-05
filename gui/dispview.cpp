@@ -14,6 +14,7 @@
 #include <vector>
 
 //line 1 git-test branch
+//line 2 git-test branch
 
 // test under git repository
 
