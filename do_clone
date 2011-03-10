@@ -1,5 +1,7 @@
-git clone .git  zeroapp_bak/
-git clone mathlib/.git  zeroapp_bak/mathlib
-git clone apputil/.git  zeroapp_bak/apputil
-tar -czf zeroapp_bak.tar.gz zeroapp_bak
-rm -fR zeroapp_bak
+
+REP_NAME=zeroapp-`date +%F`
+git clone .git  $REP_NAME/
+git clone mathlib/.git  $REP_NAME/mathlib
+git clone apputil/.git  $REP_NAME/apputil
+tar -czf $REP_NAME.tar.gz $REP_NAME
+rm -fR $REP_NAME
