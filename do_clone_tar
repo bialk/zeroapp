@@ -3,3 +3,5 @@ REP_NAME=zeroapp-`date +%F`
 git clone .git  $REP_NAME/
 git clone mathlib/.git  $REP_NAME/mathlib
 git clone apputil/.git  $REP_NAME/apputil
+tar -czf $REP_NAME.tar.gz $REP_NAME
+rm -fR $REP_NAME
