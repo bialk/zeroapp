@@ -2,6 +2,7 @@
 #define imageplane_h
 
 #include "editviewobj.h"
+#include "ImageTile.h"
 //#include "mathlib/mathutl/mymath.h"
 //#include "mathlib/mathutl/meshandalg.h"
 //#include "glhelper.h"
@@ -10,6 +11,7 @@
 #include <GL/gl.h>
 #include <vector>
 #include <sigc++/sigc++.h>
+
 
 class ImagePlane;
 class ImagePlaneEH: public EvtHandle{
@@ -35,8 +37,9 @@ class ImagePlane: public EditViewObj{
   std::vector<float> data_attd;
   float lights[4][3];
 
-  GLTex2D image_tex;
-  GLTex2D albedo_tex;
+  //GLTex2D image_tex;
+  ImageTile image_tile;
+  //GLTex2D albedo_tex; // not implemented yet!
 
   GLListHandle circle;
 

@@ -13,7 +13,6 @@
 
 #include <vector>
 
-
 // test under git repository
 
 // class GLScene

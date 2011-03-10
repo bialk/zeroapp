@@ -7,6 +7,7 @@
 //#include "glhelper.h"
 #include "eventhnd.h"
 #include "glhelper.h"
+#include "ImageTile.h"
 #include <GL/gl.h>
 #include <vector>
 #include <sigc++/sigc++.h>
@@ -35,8 +36,9 @@ class Matting: public EditViewObj{
   std::vector<float> data_attd;
   float lights[4][3];
 
-  GLTex2D image_tex;
-  GLTex2D albedo_tex;
+  //GLTex2D image_tex;
+  ImageTile image_tile;
+  //GLTex2D albedo_tex; // it is not implemented yet!
 
   GLListHandle circle;
 
