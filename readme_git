@@ -1,6 +1,7 @@
 # use command to setup git line endings
 git config --global core.eol lf
 git config --global core.text auto
+git config --global core.autocrlf input
 
 #this will convert all crlf into lf
 
