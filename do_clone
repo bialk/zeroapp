@@ -1,0 +1,5 @@
+git clone .git  zeroapp_bak/
+git clone mathlib/.git  zeroapp_bak/mathlib
+git clone apputil/.git  zeroapp_bak/apputil
+tar -czf zeroapp_bak.tar.gz zeroapp_bak
+rm -fR zeroapp_bak
