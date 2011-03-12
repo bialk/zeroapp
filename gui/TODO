@@ -1,14 +1,7 @@
-=> point editor need to modify (it is difficult to work with point set,
-it may be simplified somehow)
-   
-=> project need serialisation ideology when data may be easily
-understood by user
+=> Brush editor may be build as mouse tracker. It will memorize
+   trajectory of mouse as a set of points. Each point will have
+   position attribues + some additional expandable attributes which
+   can be expanded. Also the REDO/UNDO operations must be implemented.
 
-=> setting pairs of points to the model is not always convenient. Good
-idea is to use sliding points to fit the model. The point just show
-the true position of the boundary in the MRI volume and an algorithm
-should be able to fit model in accordance with the pointed boundaries.
- 
-=> add the old surface building algorithm
+=> Optimization with Multigrid solver for SFS method
 
-=> sparce matrix solver must be adopted.
