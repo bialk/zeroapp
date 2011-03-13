@@ -1,5 +1,5 @@
 
-REP_NAME=zeroapp-`date +%F`
+REP_NAME=zeroapp-`date +%s`
 
 mv ../zeroapp-new ../$REP_NAME.bak
 
