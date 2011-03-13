@@ -1,8 +1,9 @@
 
 REP_NAME=zeroapp-`date +%s`
 
+if [ -d ../zeroapp-new ]; then 
 mv ../zeroapp-new ../$REP_NAME.bak
-
+fi
 
 git clone .git  ../zeroapp-new/
 git clone mathlib/.git  ../zeroapp-new/mathlib
@@ -18,4 +19,6 @@ git clone apputil/.git  ../zeroapp-new/apputil
 # 1) create new work directory from the latest clone using the name of 
      old working directory
 # 2) copy all tracked files from old work directory to the new work directory
+if [ -d ../$REP_NAME.bak ]; then
 rsync -av --ignore-existing --exclude '.git' ../$REP_NAME.bak/ ../zeroapp-new/
+fi
