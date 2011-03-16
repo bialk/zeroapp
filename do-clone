@@ -17,7 +17,7 @@ git clone apputil/.git  ../zeroapp-new/apputil
 # steps for cloning
 # 1) rename old work directory with generated archive name
 # 1) create new work directory from the latest clone using the name of 
-     old working directory
+#    old working directory
 # 2) copy all tracked files from old work directory to the new work directory
 if [ -d ../$REP_NAME.bak ]; then
 rsync -av --ignore-existing --exclude '.git' ../$REP_NAME.bak/ ../zeroapp-new/
