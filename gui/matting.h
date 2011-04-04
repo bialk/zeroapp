@@ -12,6 +12,30 @@
 #include <vector>
 #include <sigc++/sigc++.h>
 
+
+
+
+class StrokePatch;
+class StrokePatchEH: public EvtHandle{
+ public:
+  StrokePatch *ev;
+  int state_drag;
+  sigc::signal<void> SyncUI;
+
+  StrokePatchEH(StrokePatch *v);
+  virtual void Handle(EventBall *eventball);
+};
+
+
+class StrokePatch{
+ public:
+  
+  
+  virtual void Draw(DrawCntx *cntx);
+  void TreeScan(TSOCntx *cntx);
+};
+
+
 class Matting;
 class MattingEH: public EvtHandle{
  public:
