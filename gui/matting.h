@@ -14,7 +14,7 @@
 
 
 
-
+//================================================================
 class StrokePatch;
 class StrokePatchEH: public EvtHandle{
  public:
@@ -29,6 +29,15 @@ class StrokePatchEH: public EvtHandle{
 
 class StrokePatch{
  public:
+  struct xy{float x; float y;};
+  // point set
+  int last_pset;
+  int last_pnum;
+  std::vector<std::vector<StrokePatch::xy> > pset;
+
+  StrokePatch();
+  void strokeStart(int x, int y);
+  void strokeContinue(int x, int y);
   
   
   virtual void Draw(DrawCntx *cntx);
@@ -36,6 +45,7 @@ class StrokePatch{
 };
 
 
+// ===============================================================
 class Matting;
 class MattingEH: public EvtHandle{
  public:

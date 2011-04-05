@@ -10,6 +10,30 @@
 #include "viewctrl.h"
 #include "shapefromshade.h"
 
+
+
+//===============================================================
+
+StrokePatch::StrokePatch():
+  last_pset(0)
+  ,pset(200)
+{
+  //last_pset(0);
+  //pset.resize(200);
+}
+
+void StrokePatch::strokeStart(int x, int y){
+  pset[2][3].x = x;
+  pset[2][3].y = y;
+}
+void StrokePatch::strokeContinue(int x, int y){}
+ 
+void StrokePatch::Draw(DrawCntx *cntx){}
+void StrokePatch::TreeScan(TSOCntx *cntx){}
+
+
+
+//===============================================================
 Matting::Matting():
   eh(this),
   w(0),h(0),
