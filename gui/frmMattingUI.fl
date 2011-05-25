@@ -6,106 +6,56 @@ class frmMattingUI {open
 } {
   decl {public:} {public
   }
-  Function {frmMattingUI()} {open selected
+  Function {frmMattingUI()} {open
   } {
     Fl_Window pnl {
-      label {Shape From Shade} open
-      xywh {237 248 185 375} type Double box UP_BOX align 2 resizable visible
+      label Matting open
+      xywh {752 246 185 285} type Double box UP_BOX align 2 resizable visible
     } {
-      Fl_Group {} {
-        label Image open
-        xywh {6 20 80 71} box PLASTIC_UP_FRAME align 5
+      Fl_Group show {
+        label Show open selected
+        xywh {5 23 170 73} box PLASTIC_UP_FRAME align 5
       } {
-        Fl_Round_Button image_off {
+        Fl_Round_Button show_off {
           label off
-          xywh {11 26 70 20} down_box ROUND_DOWN_BOX
+          xywh {10 26 71 18} down_box ROUND_DOWN_BOX
         }
-        Fl_Round_Button image_albedo {
-          label albedo
-          xywh {11 46 70 20} down_box ROUND_DOWN_BOX
+        Fl_Round_Button show_src {
+          label source
+          xywh {10 42 71 19} down_box ROUND_DOWN_BOX
         }
-        Fl_Round_Button image_image {
-          label image
-          xywh {11 66 70 20} down_box ROUND_DOWN_BOX
+        Fl_Round_Button show_src_matte {
+          label {source+matte}
+          xywh {10 58 71 19} down_box ROUND_DOWN_BOX
         }
-      }
-      Fl_Group {} {
-        label Shape open
-        xywh {96 20 80 71} box PLASTIC_UP_FRAME align 5
-      } {
-        Fl_Round_Button shape_off {
-          label off
-          xywh {101 22 71 18} down_box ROUND_DOWN_BOX
-        }
-        Fl_Round_Button shape_notex {
-          label {no tex}
-          xywh {101 38 71 19} down_box ROUND_DOWN_BOX
-        }
-        Fl_Round_Button shape_albedo {
-          label albedo
-          xywh {101 54 71 19} down_box ROUND_DOWN_BOX
-        }
-        Fl_Round_Button shape_image {
-          label image
-          xywh {101 70 71 18} down_box ROUND_DOWN_BOX
+        Fl_Round_Button show_matte {
+          label matte
+          xywh {10 74 71 18} down_box ROUND_DOWN_BOX
         }
       }
-      Fl_Group {} {
-        label {Image Slots} open
-        xywh {5 120 170 40} box PLASTIC_UP_FRAME align 5
-      } {
-        Fl_Button img1 {
-          label 1
-          xywh {20 130 30 20}
-        }
-        Fl_Button img2 {
-          label 2
-          xywh {57 130 30 20}
-        }
-        Fl_Button img3 {
-          label 3
-          xywh {94 130 30 20}
-        }
-        Fl_Button img4 {
-          label 4
-          xywh {131 130 30 20}
-        }
+      Fl_Output imagefile_src {
+        label {Source Image File:}
+        xywh {5 115 175 20} align 5
       }
-      Fl_Output imagefile {
-        label {Image File:}
-        xywh {5 182 175 20} align 5
-      }
-      Fl_Button imagefile_dlg {
+      Fl_Button imagefiledlg_src {
         label {...}
-        xywh {150 202 30 25}
+        xywh {150 135 30 25}
       }
-      Fl_Box {} {
-        label {light direction:}
-        xywh {5 237 135 85} box PLASTIC_UP_FRAME align 5
+      Fl_Button reset_btn {
+        label Rst
+        xywh {40 245 35 25}
       }
-      Fl_Input norm_x {
-        label {X:}
-        xywh {35 248 90 22}
-        code0 {\#include <Fl/Fl_Float_Input.h>}
-        class Fl_Float_Input
+      Fl_Button go_btn {
+        label {@>}
+        xywh {110 245 35 25}
       }
-      Fl_Input norm_y {
-        label {Y:}
-        xywh {35 269 90 23}
-        class Fl_Float_Input
+      Fl_Output imagefile_matte {
+        label {Matte Image File}
+        xywh {5 175 175 20} align 5
       }
-      Fl_Input norm_z {
-        label {Z:}
-        xywh {35 289 90 23}
-        class Fl_Float_Input
-      }
-      Fl_Button reset_shape_btn {
-        label Reset
-        xywh {5 327 82 25}
-      }
-      Fl_Button build_shape_btn {
-        label Build
-        xywh {95 327 82 25}
+      Fl_Button imagefiledlg_matte {
+        label {...}
+        xywh {150 195 30 25}
       }
     }
   }

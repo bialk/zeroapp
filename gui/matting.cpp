@@ -35,19 +35,12 @@ void StrokePatch::TreeScan(TSOCntx *cntx){}
 
 //===============================================================
 Matting::Matting():
-  eh(this),
-  w(0),h(0),
-  curslot(0),
-  image_mode(image_mode_image),
-  shape_mode(shape_mode_off),
-  edit_mode(edit_mode_off),
-  cache_slot(-1),
-  glsel_lightcur(0)
+  eh(this)
+  ,w(0),h(0)
+  ,show_mode(show_mode_src)
+  ,edit_mode(edit_mode_off)
+  ,cache_slot(-1)
 {
-    lights[0][0]=-1; lights[0][1]=-1; lights[0][2]=0;
-    lights[1][0]= 1; lights[1][1]=-1; lights[1][2]=0;
-    lights[2][0]= 1; lights[2][1]= 1; lights[2][2]=0;
-    lights[3][0]=-1; lights[3][1]= 1; lights[3][2]=0;
 }
 
 Matting::~Matting(){}
@@ -57,11 +50,8 @@ void Matting::AskForData(Serializer *s){
   if(s->ss->storageid==SRLZ_LAYOUT){
   }
   if(s->ss->storageid==SRLZ_PROJECT){
-    s->Item("imagefname",Sync(imagefname,4));
-    s->Item("lights0",Sync(lights[0],3));
-    s->Item("lights1",Sync(lights[1],3));
-    s->Item("lights2",Sync(lights[2],3));
-    s->Item("lights3",Sync(lights[3],3));
+    s->Item("fname_src",Sync(&fname_src));
+    s->Item("fname_matte",Sync(&fname_matte));
   } 
 }
 
@@ -69,40 +59,22 @@ void Matting::TreeScan(TSOCntx *cntx){
   if(cntx==&TSOCntx::TSO_Init){
   }
   else if(cntx==&TSOCntx::TSO_ProjectNew){
-    img[0].clear();
-    img[1].clear();
-    img[2].clear();
-    img[3].clear();
-    curslot = 0;
-    cache_slot = -1;
-    imagefname[0].clear();
-    imagefname[1].clear();
-    imagefname[2].clear();
-    imagefname[3].clear();
-    //image_tex.clear();
+    img_src.clear();
+    img_matte.clear();
     image_tile.clear();
     w=h=0;
-
-    data_attd.clear();
-    lights[0][0]=-1; lights[0][1]=-1; lights[0][2]=0;
-    lights[1][0]= 1; lights[1][1]=-1; lights[1][2]=0;
-    lights[2][0]= 1; lights[2][1]= 1; lights[2][2]=0;
-    lights[3][0]=-1; lights[3][1]= 1; lights[3][2]=0;
   }
   else if(cntx==&TSOCntx::TSO_ProjectLoad){
     Open(0);
-    Open(1);
-    Open(2);
-    Open(3);
-    glsel_light[0]=dv->GetNewName();
-    glsel_light[1]=dv->GetNewName();
-    glsel_light[2]=dv->GetNewName();
-    glsel_light[3]=dv->GetNewName();
+    //Open(1);
+    //Open(2);
+    //Open(3);
    }
 };
 
 
-void Matting::Open(int slot){  
+void Matting::Open(int slot){
+#if 0
   if(cache_slot==slot)  cache_slot = -1;
   
   img[slot].clear();
@@ -162,9 +134,11 @@ void Matting::Open(int slot){
   */
   memcpy(img_ptr,pixeles,4*w*h);
   FreeImage_Unload(imagen);
+#endif
 }
 	
-void Matting::LoadTxt(int slot){  
+void Matting::LoadTxt(int slot){
+#if 0
   if(img[slot].empty()) return;
   if( img[slot].size()!=w*h*4 ) {
     err_printf(("texture loading error"));
@@ -187,7 +161,7 @@ void Matting::LoadTxt(int slot){
   glTexImage2D(GL_TEXTURE_RECTANGLE_ARB,0,GL_RGBA, w, h, 0, GL_BGRA,GL_UNSIGNED_BYTE,(GLvoid*)&img[slot][0] );
   */
   image_tile.LoadBGRA(&img[slot][0], w, h);
-  
+#endif
 }
 
 #if 0
@@ -228,11 +202,10 @@ void Matting::Draw(DrawCntx *cntx){
 
 
   // draw image
-  if(image_mode!=image_mode_off){
+  if(show_mode!=show_mode_off){
 
-    if(cache_slot != curslot){
-      cache_slot = curslot;
-      LoadTxt(curslot);
+    if(show_mode == show_mode_src){
+      //LoadTxt(curslot);
     }
 
     glDisable(GL_LIGHTING);
@@ -259,184 +232,10 @@ void Matting::Draw(DrawCntx *cntx){
     glEnable(GL_LIGHTING);
   }
 
-  // draw shape
-  if(shape_mode!=shape_mode_off){    
-    if(!shape.id){
-      glNewList(shape(),GL_COMPILE_AND_EXECUTE);
-      if(data_attd.size()==w*h){
-	int i,j;   
-	for(i=1;i<h;i++){
-	  glBegin(GL_QUAD_STRIP);
-	  for(j=0;j<w;j++){
-	    float x,y,z;
-	    int ih=i;
-
-	    if(j>0){
-	      vnormal2(x,y,z,
-		       j-1,i-1, data_attd[w*(ih-1)+j-1],
-		       j,i-1, data_attd[w*(ih-1)+j],
-		       j,i, data_attd[w*ih+j]
-		       );
-	      glNormal3f(x,y,z);
-
-
-	      glColor3ubv(&img[0][(w*(ih-1)+j)*3]);
-	      glVertex3f(j,i-1, data_attd[w*(ih-1)+j]);
-
-	      vnormal2(x,y,z,
-		       j,i-1, data_attd[w*(ih-1)+j],
-		       j,i, data_attd[w*ih+j],
-		       j-1,i, data_attd[w*ih+j-1]);	      
-	      glNormal3f(x,y,z);
-	      glColor3ubv(&img[0][(w*(ih)+j)*3]);
-	      glVertex3f(j,i, data_attd[w*ih+j]);
-	    }
-
-	    if(j<w-1){
-	      vnormal2(x,y,z,
-		       j,i, data_attd[w*ih+j],
-		       j,i-1, data_attd[w*(ih-1)+j],
-		       j+1,i-1, data_attd[w*(ih-1)+j+1]);
-	      glNormal3f(x,y,z);
-	      glColor3ubv(&img[0][(w*(ih-1)+j)*3]);
-	      glVertex3f(j,i-1, data_attd[w*(ih-1)+j]);
-
-	      vnormal2(x,y,z,
-		       j+1,i, data_attd[w*ih+j+1],
-		       j,i, data_attd[w*ih+j],
-		       j,i-1, data_attd[w*(ih-1)+j]);	      
-	      glNormal3f(x,y,z);
-	      glColor3ubv(&img[0][(w*(ih)+j)*3]);
-	      glVertex3f(j,i, data_attd[w*ih+j]);
-	    }
-
-	  }
-	  glEnd();
-	}
-      }
-      glEndList();
-    }
-    else
-      glCallList(shape());
-  }
-
-
-  // drawing light control points
-  if(image_mode!=image_mode_off && edit_mode==edit_mode_on){
-
-    glDisable(GL_LIGHTING);  
-    glEnable(GL_POINT_SMOOTH); 
-    glPointSize(6);
-
-    glColor3f(1,0,0);
-    glLineWidth(3);
-    glBegin(GL_LINES);
-    glVertex3f(w*0.5f,h*0.5f-3.f,0.f);
-    glVertex3f(w*0.5f,h*0.5f+3.f,0.f);
-    glVertex3f(w*0.5f-3.f,h*0.5f,0.f);
-    glVertex3f(w*0.5f+3.f,h*0.5f,0.f);
-    glEnd();
-
-    int cursel=-1;
-    int i;
-    for(i=0;i<4;i++){
-      if(glsel_lightcur==glsel_light[i]){
-	glColor3f(1,1,0);
-	cursel=i;
-      }    
-      else
-	glColor3f(1,0,0);
-
-      glPushName(glsel_light[i]);
-      glBegin(GL_POINTS);
-      glVertex3f(
-		 (w+lights[i][0]*h)*0.5f,
-		 (h+lights[i][1]*h)*0.5f,
-		 0
-		 );
-      //glVertex3f(w,h,0);
-      glEnd();
-      glPopName();
-    }
-
-    if(cursel>=0){
-      glColor3f(1,1,0);
-      float dist = h*0.5*sqrt(lights[cursel][0]*lights[cursel][0]+
-			      lights[cursel][1]*lights[cursel][1]);
-
-      glMatrixMode(GL_MODELVIEW);
-      glPushMatrix();
-      glTranslatef(w*0.5,h*0.5,0);
-      glScalef(dist,dist,1);
-      if(!circle.id) {
-	// drawing circle
-	glNewList(circle(),GL_COMPILE_AND_EXECUTE);
-	int i;
-	glBegin(GL_LINE_STRIP);
-	for(i=0;i<46;i++){
-	  glVertex3f(sin(i*2*M_PI/45.f),cos(i*2*M_PI/45.f),0.f);
-	}
-	glEnd();
-	glEndList();  
-      }
-      else{
-	glCallList(circle());      
-      }
-      glPopMatrix();
-    }
-
-    glColor3f(1,1,1);
-  }
-
 };
   
 
 void Matting::Build(){
-  ShapeFromShade sfs;
-  sfs.w=w;
-  sfs.h=h;
-  memcpy(sfs.s,lights,sizeof(sfs.s));
-  memcpy(sfs.s_alb,lights,sizeof(sfs.s));
-
-  std::vector<float> image[4];
-  image[0].resize(w*h*3);
-  image[1].resize(w*h*3);
-  image[2].resize(w*h*3);
-  image[3].resize(w*h*3);
-  std::vector<float> albedo(w*h*3);
-  std::vector<float> data_norm(w*h*3);
-  //std::vector<float> data_attd(w*h);
-  data_attd.resize(w*h);
-
-  sfs.image[0]=&image[0][0];
-  sfs.image[1]=&image[1][0];
-  sfs.image[2]=&image[2][0];
-  sfs.image[3]=&image[3][0];
-  sfs.albedo=&albedo[0];
-  sfs.data_norm=&data_norm[0];
-  sfs.data_attd=&data_attd[0];
-
-  int i;
-  for(i=0;i<w*h;++i){
-    image[0][i*3+0]=float(img[0][i*4+2])/255.f;
-    image[0][i*3+1]=float(img[0][i*4+1])/255.f;
-    image[0][i*3+2]=float(img[0][i*4+0])/255.f;
-
-    image[1][i*3+0]=float(img[1][i*4+2])/255.f;
-    image[1][i*3+1]=float(img[1][i*4+1])/255.f;
-    image[1][i*3+2]=float(img[1][i*4+0])/255.f;
-
-    image[2][i*3+0]=float(img[2][i*4+2])/255.f;
-    image[2][i*3+1]=float(img[2][i*4+1])/255.f;
-    image[2][i*3+2]=float(img[2][i*4+0])/255.f;
-
-    image[3][i*3+0]=float(img[3][i*4+2])/255.f;
-    image[3][i*3+1]=float(img[3][i*4+1])/255.f;
-    image[3][i*3+2]=float(img[3][i*4+0])/255.f;
-
-  }
-  sfs.build();
-  shape.clear();
 }
 
 
@@ -467,6 +266,8 @@ void MattingEH::Handle(EventBall *eventball){
   }
   else if(eventball->event(M_DRAG) && 
           eventball->state(state_drag)){
+    // continue drag
+#if 0
     float x=eventball->x, y=eventball->y, z=0;
     ev->dv->viewctrl->hitscene(x,y,z);
     float h=ev->h/2;
@@ -490,13 +291,17 @@ void MattingEH::Handle(EventBall *eventball){
     SyncUI();
     ev->dv->redraw();
     eventball->stop();
+#endif
   }
   else if(eventball->event(M_UP) &&
           eventball->state(state_drag)){
+    // end drag
+#if 0
     eventball->setstate(0);
     ev->glsel_lightcur=0;
     ev->dv->redraw();
     eventball->stop();
+#endif
   }
   else if(!eventball->state(0)){
     // move event futher down
@@ -507,7 +312,8 @@ void MattingEH::Handle(EventBall *eventball){
 	  eventball->kmod(0) &&
           eventball->mbtn(1)){
 
-
+    // start drag
+#if 0
     int id =ev->dv->SelectObj(eventball->x,eventball->y);
     if(id == ev->glsel_light[0] ||
        id == ev->glsel_light[1] ||
@@ -522,6 +328,6 @@ void MattingEH::Handle(EventBall *eventball){
 	eventball->stop();
       }
     }
-
+#endif 
   }
 }

@@ -64,17 +64,15 @@ class Matting: public EditViewObj{
 
   // input data 
   int w,h;
-  int curslot;
-  std::string imagefname[4];
-  std::vector<unsigned char> img[4];
-  std::vector<float> data_attd;
+  std::string fname_src;
+  std::vector<unsigned char> img_src;
+  std::string fname_matte;
+  std::vector<unsigned char> img_matte;
   float lights[4][3];
 
   //GLTex2D image_tex;
   ImageTile image_tile;
   //GLTex2D albedo_tex; // it is not implemented yet!
-
-  GLListHandle circle;
 
   Matting();
   ~Matting();
@@ -84,25 +82,20 @@ class Matting: public EditViewObj{
   virtual void Draw(DrawCntx *cntx);
 
   enum {
-    image_mode_off,
-    image_mode_image,
-    image_mode_albedo,
-
-    shape_mode_off,
-    shape_mode_notex,
-    shape_mode_albedo,
-    shape_mode_image,
+    show_mode_off,
+    show_mode_src,
+    show_mode_matte,
+    show_mode_src_matte,
 
     edit_mode_off,
     edit_mode_on
   };
 
-  int image_mode;
-  int shape_mode;
+  int show_mode;
   int edit_mode;
 
-  GLListHandle shape;
-  void BuildShape();
+  //GLListHandle shape;
+  //void BuildShape();
 
   MattingEH  eh;
 
@@ -110,9 +103,9 @@ class Matting: public EditViewObj{
   void Open(int slot);
   void LoadTxt(int slot);
 
-  GLuint glsel_lightcur;
-  GLuint glsel_light[4];
-  void DrawLightPoints();
+  //GLuint glsel_lightcur;
+  //GLuint glsel_light[4];
+  //void DrawLightPoints();
 
   void Build();
 };

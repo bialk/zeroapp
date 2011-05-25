@@ -6,33 +6,24 @@
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Round_Button.H>
-#include <FL/Fl_Button.H>
 #include <FL/Fl_Output.H>
-#include <FL/Fl_Box.H>
-#include <Fl/Fl_Float_Input.h>
+#include <FL/Fl_Button.H>
 
 class frmMattingUI {
 public:
   public:;
   frmMattingUI();
   Fl_Double_Window *pnl;
-  Fl_Round_Button *image_off;
-  Fl_Round_Button *image_albedo;
-  Fl_Round_Button *image_image;
-  Fl_Round_Button *shape_off;
-  Fl_Round_Button *shape_notex;
-  Fl_Round_Button *shape_albedo;
-  Fl_Round_Button *shape_image;
-  Fl_Button *img1;
-  Fl_Button *img2;
-  Fl_Button *img3;
-  Fl_Button *img4;
-  Fl_Output *imagefile;
-  Fl_Button *imagefile_dlg;
-  Fl_Float_Input *norm_x;
-  Fl_Float_Input *norm_y;
-  Fl_Float_Input *norm_z;
-  Fl_Button *reset_shape_btn;
-  Fl_Button *build_shape_btn;
+  Fl_Group *show;
+  Fl_Round_Button *show_off;
+  Fl_Round_Button *show_src;
+  Fl_Round_Button *show_src_matte;
+  Fl_Round_Button *show_matte;
+  Fl_Output *imagefile_src;
+  Fl_Button *imagefiledlg_src;
+  Fl_Button *reset_btn;
+  Fl_Button *go_btn;
+  Fl_Output *imagefile_matte;
+  Fl_Button *imagefiledlg_matte;
 };
 #endif

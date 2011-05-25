@@ -37,19 +37,15 @@ class frmMatting{
   //FltkIdleTask idletask;
 
   PUBLIC_SLOTS(frmMatting):
-  void select_image(Fl_Widget* o, void* v);
-  void imagefile_dlg(Fl_Widget* o, void* v);
-  void light_edt(Fl_Widget* o, void* v);
-  void build_shape_btn(Fl_Widget* o, void* v);
+  void imagefiledlg_src(Fl_Widget* o, void* v);
+  void imagefiledlg_matte(Fl_Widget* o, void* v);
+  void go_btn(Fl_Widget* o, void* v);
+  void reset_btn(Fl_Widget* o, void* v);
 
-  void image_off(Fl_Widget* o, void* v);
-  void image_albedo(Fl_Widget* o, void* v);
-  void image_image(Fl_Widget* o, void* v);
-
-  void shape_off(Fl_Widget* o, void* v);
-  void shape_notex(Fl_Widget* o, void* v);
-  void shape_albedo(Fl_Widget* o, void* v);
-  void shape_image(Fl_Widget* o, void* v);
+  void show_off(Fl_Widget* o, void* v);
+  void show_src(Fl_Widget* o, void* v);
+  void show_src_matte(Fl_Widget* o, void* v);
+  void show_matte(Fl_Widget* o, void* v);
 
 };
 
