@@ -1,3 +1,5 @@
+=> windows build broken
+
 => Caching mechanism for texture load in matting (otherwise texture loaded
    every draw call
 
