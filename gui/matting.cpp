@@ -2,7 +2,6 @@
 #include <FreeImage.h>
 #include <GL/glext.h>
 #include <sys/types.h>
-#include <sys/stat.h>
 #include <unistd.h>
 #include "apputil/serializer.h"
 #include "glhelper.h"
@@ -65,7 +64,7 @@ void Matting::TreeScan(TSOCntx *cntx){
     w=h=0;
   }
   else if(cntx==&TSOCntx::TSO_ProjectLoad){
-    Open(0);
+    LoadImage(fname_src, img_src, w, h);
     //Open(1);
     //Open(2);
     //Open(3);
@@ -73,75 +72,12 @@ void Matting::TreeScan(TSOCntx *cntx){
 };
 
 
-void Matting::Open(int slot){
-#if 0
-  if(cache_slot==slot)  cache_slot = -1;
-  
-  img[slot].clear();
-
-  struct stat st;
-  if(stat(imagefname[slot].c_str(),&st) ) {
-    err_printf(("image file \"%s\"  not found",imagefname[slot].c_str()));
-    return;
-  }
-
-  //Format Detecting
-  //Automatocally detects the format(from over 20 formats!)
-  FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(imagefname[slot].c_str(),0);
-  
-  if(formato == FIF_UNKNOWN) {
-    err_printf(("image format unknown"));
-    return;
-  }
-
-  //Image Loading
-  FIBITMAP* imagen = FreeImage_Load(formato, imagefname[slot].c_str());
-  FIBITMAP* temp = imagen;
-  if(!imagen){
-    err_printf(("image reading error"));
-    return;
-  }
-  imagen = FreeImage_ConvertTo32Bits(imagen);
-  if(!temp) {
-    err_printf(("image reading error"));
-    return;
-  }
-  FreeImage_Unload(temp);
 	
-  w = FreeImage_GetWidth(imagen);
-  h = FreeImage_GetHeight(imagen);
+void Matting::LoadTxtSrc(){
 
-  if(w*h>2048*2048*20) {
-    err_printf(("image reading error - too big image size (%ix%i)",w,h));
-    return;
-  }
-  if(0) { // debug code
-    printf("load image (%ix%i) for slot %i\n", w, h, slot);
-  }  
-	
-
-  img[slot].resize(4*w*h);
-  GLubyte* img_ptr = &img[slot][0];
-  char* pixeles = (char*)FreeImage_GetBits(imagen);
-  //FreeImage loads in BGR format, so you need to swap some bytes(Or use GL_BGR).
-  /*	
-  for(int j= 0; j<w*h; j++){
-    textura[j*4+0]= pixeles[j*4+2];
-    textura[j*4+1]= pixeles[j*4+1];
-    textura[j*4+2]= pixeles[j*4+0];
-    textura[j*4+3]= pixeles[j*4+3];
-  }
-  */
-  memcpy(img_ptr,pixeles,4*w*h);
-  FreeImage_Unload(imagen);
-#endif
-}
-	
-void Matting::LoadTxt(int slot){
-#if 0
-  if(img[slot].empty()) return;
-  if( img[slot].size()!=w*h*4 ) {
-    err_printf(("texture loading error"));
+  if(img_src.empty()) return;
+  if( img_src.size()!=w*h*4 ) {
+    err_printf(("texture loading error: incorrect size"));
     return;    
   }
 
@@ -160,8 +96,7 @@ void Matting::LoadTxt(int slot){
   // load rectangle texture
   glTexImage2D(GL_TEXTURE_RECTANGLE_ARB,0,GL_RGBA, w, h, 0, GL_BGRA,GL_UNSIGNED_BYTE,(GLvoid*)&img[slot][0] );
   */
-  image_tile.LoadBGRA(&img[slot][0], w, h);
-#endif
+  image_tile.LoadBGRA(&img_src[0], w, h);
 }
 
 #if 0
@@ -205,7 +140,7 @@ void Matting::Draw(DrawCntx *cntx){
   if(show_mode!=show_mode_off){
 
     if(show_mode == show_mode_src){
-      //LoadTxt(curslot);
+      LoadTxtSrc();
     }
 
     glDisable(GL_LIGHTING);

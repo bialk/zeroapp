@@ -1,3 +1,8 @@
+=> Caching mechanism for texture load in matting (otherwise texture loaded
+   every draw call
+
+=> LoadImage template function put into general scope from matting.h
+
 => Create data relinking dialog. Use conception of "Old Data Base
    Path" "New Data Base Path". Also "Old Data Base Path" may be
    autocomputed by calclulating the longest common substring they

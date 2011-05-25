@@ -97,24 +97,22 @@ void frmMatting::imagefiledlg_matte(Fl_Widget* o, void* v){
 }
 
 void frmMatting::imagefiledlg_src(Fl_Widget* o, void* v){
-#if 0
-  int slot = matting->curslot;
 
   const char * s = ".";
-  if(!matting->imagefname[slot].empty())
-   s = matting->imagefname[slot].c_str();
+  if(!matting->fname_src.empty())
+   s = matting->fname_src.c_str();
   
 
-  Fl_File_Chooser f(s,"Image Files (*.{tiff,tif,ppm,bmp,gif,jpg,jpeg,png})",FL_SINGLE,"Open Image");
+  Fl_File_Chooser f(s,"Image Files (*.{tiff,tif,ppm,bmp,gif,jpg,jpeg,png})",FL_SINGLE,"Open Source Image");
   f.show();  
   while(f.shown()) { Fl::wait(); }  
   if ( f.value() != NULL ){
-    matting->imagefname[slot]=f.value();
-    matting->Open(slot);
+    matting->fname_src=f.value();
+    LoadImage(matting->fname_src, matting->img_src, matting->w, matting->h);
     SyncUI();
     frmmain->ui->output->redraw();
   }
-#endif
+
 };
 
 
