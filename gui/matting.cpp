@@ -8,7 +8,7 @@
 #include "dispview.h"
 #include "viewctrl.h"
 #include "shapefromshade.h"
-
+#include "LoadImageToVec.h"
 
 
 //===============================================================
@@ -64,7 +64,7 @@ void Matting::TreeScan(TSOCntx *cntx){
     w=h=0;
   }
   else if(cntx==&TSOCntx::TSO_ProjectLoad){
-    LoadImage(fname_src, img_src, w, h);
+    LoadImageToVec(fname_src, img_src, w, h);
     //Open(1);
     //Open(2);
     //Open(3);

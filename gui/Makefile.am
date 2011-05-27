@@ -8,7 +8,7 @@ toolspanel.cpp \
 mathstruct.cpp \
 mousectrl.cpp mousectrl.h \
 savejpeg.cpp \
-glhelper.cpp savejpeg.h \
+glhelper.cpp savejpeg.h LoadImageToVec.h \
 editviewobj.cpp editviewobj.h \
 glhelper.h  mathstruct.h  toolspanel.h \
 dispview.cpp dispview.h \
