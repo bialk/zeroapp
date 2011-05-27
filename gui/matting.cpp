@@ -38,7 +38,6 @@ Matting::Matting():
   ,w(0),h(0)
   ,show_mode(show_mode_src)
   ,edit_mode(edit_mode_off)
-  ,cache_slot(-1)
 {
 }
 
@@ -64,16 +63,17 @@ void Matting::TreeScan(TSOCntx *cntx){
     w=h=0;
   }
   else if(cntx==&TSOCntx::TSO_ProjectLoad){
-    LoadImageToVec(fname_src, img_src, w, h);
-    //Open(1);
-    //Open(2);
-    //Open(3);
+    reopenSrc();
    }
 };
 
 
+void Matting::reopenSrc(){
+    LoadImageToVec(fname_src, img_src, w, h);
+    if(w && h) eventset.insert(event_image_src_updated);
+}
 	
-void Matting::LoadTxtSrc(){
+void Matting::loadTxtSrc(){
 
   if(img_src.empty()) return;
   if( img_src.size()!=w*h*4 ) {
@@ -99,14 +99,6 @@ void Matting::LoadTxtSrc(){
   image_tile.LoadBGRA(&img_src[0], w, h);
 }
 
-#if 0
-class TaleTxt{
-public:
-  void Set(unsigned char* image);
-  void RenderTriangle(float *vtx, float *txt);  
-  void RenderQuadriplet(float *vtx, float *txt);  
-};
-#endif
 
 void Matting::Draw(DrawCntx *cntx){
 
@@ -140,7 +132,10 @@ void Matting::Draw(DrawCntx *cntx){
   if(show_mode!=show_mode_off){
 
     if(show_mode == show_mode_src){
-      LoadTxtSrc();
+      if(eventset.count(event_image_src_updated)){
+	loadTxtSrc();
+        eventset.erase(event_image_src_updated);
+      }
     }
 
     glDisable(GL_LIGHTING);

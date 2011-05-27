@@ -69,9 +69,7 @@ class Matting: public EditViewObj{
   std::vector<unsigned char> img_matte;
   float lights[4][3];
 
-  //GLTex2D image_tex;
   ImageTile image_tile;
-  //GLTex2D albedo_tex; // it is not implemented yet!
 
   Matting();
   ~Matting();
@@ -87,8 +85,12 @@ class Matting: public EditViewObj{
     show_mode_src_matte,
 
     edit_mode_off,
-    edit_mode_on
+    edit_mode_on,
+
+    event_image_src_updated
   };
+
+  std::set<int> eventset;
 
   int show_mode;
   int edit_mode;
@@ -98,9 +100,8 @@ class Matting: public EditViewObj{
 
   MattingEH  eh;
 
-  int  cache_slot;
-  void OpenSrc();  
-  void LoadTxtSrc();
+  void reopenSrc();  
+  void loadTxtSrc();
 
   //GLuint glsel_lightcur;
   //GLuint glsel_light[4];

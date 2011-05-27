@@ -4,7 +4,6 @@
 #include "frmMainDisplayUI.h"
 #include "../apputil/serializer.h"
 #include <Fl/Fl_File_Chooser.h>
-#include "LoadImageToVec.h"
 
 
 void frmMatting::TreeScan(TSOCntx* cntx){
@@ -109,7 +108,7 @@ void frmMatting::imagefiledlg_src(Fl_Widget* o, void* v){
   while(f.shown()) { Fl::wait(); }  
   if ( f.value() != NULL ){
     matting->fname_src=f.value();
-    LoadImageToVec(matting->fname_src, matting->img_src, matting->w, matting->h);
+    matting->reopenSrc();
     SyncUI();
     frmmain->ui->output->redraw();
   }
