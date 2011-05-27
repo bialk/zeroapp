@@ -1,5 +1,9 @@
 #ifndef frmPrjTree_h
 #define frmPrjTree_h
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 #include "frmPrjTreeUI.h"
 #include "fltk_calllist.h"
 #include <memory>

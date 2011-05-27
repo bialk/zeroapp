@@ -1,5 +1,8 @@
 #ifndef frmMatting_h
 #define frmMatting_h
+#ifdef _WIN32
+#include <windows.h>
+#endif
 #include "fltk_calllist.h"
 #include "frmMattingUI.h"
 #include <memory>
