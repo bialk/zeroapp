@@ -54,7 +54,7 @@ zeroapp_LDADD =  $(LIBS) $(SIGC_LIBS) -lfltk_png -lz -llapack -lg2c -lblas -lglu
 else
 
 zeroapp_CPPFLAGS = -w  -I.. -I$(HOME)/include -I$(HOME)/lib/sigc++-2.0/include -DPACKAGE_SHAREDIR=\"$(zeroapp)\"
-#zeroapp_LDFLAGS = -L/usr/X11R6/lib64 -L/usr/X11R6/lib -L$(HOME)/lib 
+zeroapp_LDFLAGS = -L/usr/X11R6/lib64 -L/usr/X11R6/lib -L$(HOME)/lib 
 zeroapp_LDADD = $(LIBS) $(SIGC_LIBS)
 
 endif
