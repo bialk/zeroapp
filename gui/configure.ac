@@ -46,27 +46,35 @@ dnl Checks for libraries.
 save_LDFLAGS="$LDFLAGS"
 LDFLAGS="$LDFLAGS -L/usr/X11R6/lib64 -L/usr/X11R6/lib -L$HOME/lib -lstdc++"
 dnl AC_CHECK_LIB(matpro, main, ,[echo "Im afraid we need matpro library:(."; exit 1])
-AC_CHECK_LIB(sigc-2.0, main, ,[echo "Im afraid we need sigc-2.0 library:(."; exit 1])
+dnl AC_CHECK_LIB(sigc-2.0, main, ,[echo "Im afraid we need sigc-2.0 library:(."; exit 1])
+PKG_CHECK_MODULES(SIGC,sigc++-2.0 >= 2.2.4)
 AC_CHECK_LIB(m, main, ,[echo "Im afraid we need m library:(."; exit 1])
 AC_CHECK_LIB(lapackcpp, main, ,[echo "Im afraid we need lapackcpp library. :("; exit 1] )
 AC_CHECK_LIB(freeimage, main, ,[echo "Im afraid we need freeimage library. :("; exit 1] )
-dnl AC_CHECK_LIB(GL, main, ,[echo "Im afraid we need GL library:(."; exit 1])
-dnl AC_CHECK_LIB(GLU, main, ,[echo "Im afraid we need GLU library:(."; exit 1])
-dnl AC_CHECK_LIB(Xmu, main, ,[echo "Im afraid we need Xmu library:(."; exit 1])
 AC_CHECK_LIB(spooles_I32, main, ,[echo "Im afraid we need spooles_I32 library. :("; exit 1],[-lm])
 AC_CHECK_LIB(fltk, main, ,[echo "Im afraid we need fltk library:(."; exit 1])
 AC_CHECK_LIB(fltk_gl, main, ,[echo "Im afraid we need fltk_gl library:(."; exit 1])
 AC_CHECK_LIB(fltk_images, main, ,[echo "Im afraid we need fltk_images library:(."; exit 1])
 AC_CHECK_LIB(fltk_forms, main, ,[echo "Im afraid we need fltk_forms library:(."; exit 1])
+AC_CHECK_LIB(jpeg,  jpeg_start_decompress, ,[echo "Im afraid we need jpeg library:(."; exit 1])
+AC_CHECK_LIB(pthread,  main, ,[echo "Im afraid we need pthread library:(."; exit 1])
+
 
 if test -z ${WIN32_TRUE}; then
+
 AC_CHECK_LIB(flu, main, ,[echo "Im afraid we need flu library:(."; exit 1],[-lopengl32])
+
 else
+
+AC_CHECK_LIB(GL, main, ,[echo "Im afraid we need GL library:(."; exit 1])
+AC_CHECK_LIB(GLU, main, ,[echo "Im afraid we need GLU library:(."; exit 1])
+AC_CHECK_LIB(Xmu, main, ,[echo "Im afraid we need Xmu library:(."; exit 1])
+AC_CHECK_LIB(png, main, ,[echo "Im afraid we need png library:(."; exit 1])
 AC_CHECK_LIB(flu, main, ,[echo "Im afraid we need flu library:(."; exit 1],[-lGL])
+
 fi
 
-dnl AC_CHECK_LIB(png, main, ,[echo "Im afraid we need png library:(."; exit 1])
-dnl AC_CHECK_LIB(jpeg, main, ,[echo "Im afraid we need jpeg library:(."; exit 1])
+
 
 dnl AC_CHECK_LIB(glui, main, ,[echo "Im afraid we need glui library:(."; exit 1],[-lglut])
 dnl AC_CHECK_LIB(glut, main, ,[echo "Im afraid we need glut library:(."; exit 1],[-lGL -lGLU])
