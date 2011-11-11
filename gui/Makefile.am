@@ -48,7 +48,8 @@ zeroapp_LDFLAGS =  -mwindows  -mno-cygwin -L/usr/X11R6/lib -L$(HOME)/lib
 # the sequense "-llapack -lg2c -lblas"  was added to solve linker problem
 # the sequense "-lfltk_jpeg -lfltk_png -lz"  was added to support Fl_Help_Dialog 
 # fltk_jpeg must be replaced with jpeg to avoid conflicts
-zeroapp_LDADD =  $(LIBS) $(SIGC_LIBS) -lfltk_png -lz -llapack -lg2c -lblas -lglu32 -lopengl32  -lole32 -luuid -lcomctl32 -lwsock32 -lpthreadGCE2 
+zeroapp_LDADD =  $(LIBS) $(SIGC_LIBS) -lfltk_png -lz -llapack -lg2c -lblas -lglu32 -lopengl32  -lole32 -luuid -lcomctl32 -lwsock32 
+#-lpthreadGCE2 
 
 else
 

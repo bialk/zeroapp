@@ -46,8 +46,7 @@ dnl Checks for libraries.
 save_LDFLAGS="$LDFLAGS"
 LDFLAGS="$LDFLAGS -L/usr/X11R6/lib64 -L/usr/X11R6/lib -L$HOME/lib -lstdc++"
 dnl AC_CHECK_LIB(matpro, main, ,[echo "Im afraid we need matpro library:(."; exit 1])
-dnl AC_CHECK_LIB(sigc-2.0, main, ,[echo "Im afraid we need sigc-2.0 library:(."; exit 1])
-PKG_CHECK_MODULES(SIGC,sigc++-2.0 >= 2.2.4)
+
 AC_CHECK_LIB(m, main, ,[echo "Im afraid we need m library:(."; exit 1])
 AC_CHECK_LIB(lapackcpp, main, ,[echo "Im afraid we need lapackcpp library. :("; exit 1] )
 AC_CHECK_LIB(freeimage, main, ,[echo "Im afraid we need freeimage library. :("; exit 1] )
@@ -58,6 +57,9 @@ AC_CHECK_LIB(fltk_images, main, ,[echo "Im afraid we need fltk_images library:(.
 AC_CHECK_LIB(fltk_forms, main, ,[echo "Im afraid we need fltk_forms library:(."; exit 1])
 AC_CHECK_LIB(jpeg,  jpeg_start_decompress, ,[echo "Im afraid we need jpeg library:(."; exit 1])
 AC_CHECK_LIB(pthread,  main, ,[echo "Im afraid we need pthread library:(."; exit 1])
+AC_CHECK_LIB(sigc-2.0, main, ,[echo "Im afraid we need sigc-2.0 library:(."; exit 1])
+dnl PKG_CHECK_MODULES does now work on mingw (macros is not defined)
+dnl PKG_CHECK_MODULES(SIGC,sigc++-2.0 >= 2.2.4)
 
 
 if test -z ${WIN32_TRUE}; then
