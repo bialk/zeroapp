@@ -2,7 +2,7 @@
 #include "matting.h"
 #include "frmMainDisplay.h"
 #include "frmMainDisplayUI.h"
-#include "../apputil/serializer.h"
+#include "apputil/serializer.h"
 #include <Fl/Fl_File_Chooser.h>
 
 

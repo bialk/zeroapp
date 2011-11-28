@@ -3,7 +3,7 @@
 #include "lights.h"
 #include "frmMainDisplay.h"
 #include "frmMainDisplayUI.h"
-#include "../apputil/serializer.h"
+#include "apputil/serializer.h"
 
 
 void frmViewCtrl::TreeScan(TSOCntx* cntx){

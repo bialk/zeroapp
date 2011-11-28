@@ -1,6 +1,7 @@
+#include "config.h"
 #include "frmMainDisplay.h"
-#include "../apputil/serializer.h"
-#include "../apputil/AppSysSet.h"
+#include "apputil/serializer.h"
+#include "apputil/AppSysSet.h"
 #include "dispview.h"
 #include <Fl/Fl_File_Chooser.h>
 #include "fltk_animator.h"

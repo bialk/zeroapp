@@ -4,7 +4,7 @@
 #include "matting.h"
 #include "frmMainDisplay.h"
 #include "frmMainDisplayUI.h"
-#include "../apputil/serializer.h"
+#include "apputil/serializer.h"
 #include "frmViewCtrl.h"
 #include "frmSurfCtrl.h"
 #include "frmImagePlane.h"

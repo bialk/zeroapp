@@ -3,7 +3,7 @@
 #include "lights.h"
 #include "mathstruct.h"
 #include "viewctrl.h"
-#include "../apputil/AppSysSet.h"
+#include "apputil/AppSysSet.h"
 #include "apputil/serializer.h"
 #include "apputil/eventball.h"
 #include <sigc++/sigc++.h>

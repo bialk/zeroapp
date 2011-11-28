@@ -6,7 +6,7 @@
 #include "frmMainDisplay.h"
 #include "frmMainDisplayUI.h"
 #include <Fl/Fl_File_Chooser.h>
-#include "../apputil/serializer.h"
+#include "apputil/serializer.h"
 
 frmSurfCtrl::frmSurfCtrl(frmMainDisplay *f):
   frmmain(f),

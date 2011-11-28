@@ -1,6 +1,6 @@
 #include "frmMainDisplay.h"
 #include "frmMainDisplayUI.h"
-#include "../apputil/AppSysSet.h"
+#include "apputil/AppSysSet.h"
 #include "editviewobj.h"
 
 AppSysSet appsysset("bialk","zeroapp");

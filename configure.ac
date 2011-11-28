@@ -5,16 +5,13 @@ AC_INIT([zeroapp], [0.1.0],
         [zeroapp])
 AM_INIT_AUTOMAKE
 
+AC_CONFIG_SRCDIR([gui/mainini.cpp])
+AC_CONFIG_HEADERS([config.h])
+
 dnl Checks for programs.
 AC_PROG_CXX
-AC_PROG_CC
 AC_PROG_CPP
-AC_PROG_LN_S
-dnl AC_PROG_YACC
-
 AC_PROG_INSTALL
-
-dnl AC_PROG_RANLIB
 
 # Extract host information.
 AC_CANONICAL_HOST
@@ -34,8 +31,6 @@ dnl esac
 dnl AM_CONDITIONAL(WIN32, test $win32 = true)
 AM_CONDITIONAL(WIN32, [test $host_os = "mingw32"])
 
-dnl AC_PROG_LIBTOOL
-
 dnl togle between debug or release switch
 dnl CXXFLAGS="-w -O5"
 dnl CXXFLAGS="-w -g"
@@ -43,9 +38,10 @@ dnl or use propriate command string
 dnl ./configure CXXFLAGS="..."
 
 dnl Checks for libraries.
-save_LDFLAGS="$LDFLAGS"
-LDFLAGS="$LDFLAGS -L/usr/X11R6/lib64 -L/usr/X11R6/lib -L$HOME/lib -lstdc++"
+dnl save_LDFLAGS="$LDFLAGS"
+dnl LDFLAGS="$LDFLAGS -L/usr/X11R6/lib64 -L/usr/X11R6/lib -L$HOME/lib -lstdc++"
 dnl AC_CHECK_LIB(matpro, main, ,[echo "Im afraid we need matpro library:(."; exit 1])
+LDFLAGS="-L$HOME/lib $LDFLAGS"
 
 AC_CHECK_LIB(m, main, ,[echo "Im afraid we need m library:(."; exit 1])
 AC_CHECK_LIB(lapackcpp, main, ,[echo "Im afraid we need lapackcpp library. :("; exit 1] )
@@ -80,8 +76,9 @@ fi
 
 dnl AC_CHECK_LIB(glui, main, ,[echo "Im afraid we need glui library:(."; exit 1],[-lglut])
 dnl AC_CHECK_LIB(glut, main, ,[echo "Im afraid we need glut library:(."; exit 1],[-lGL -lGLU])
-LDFLAGS="$save_LDFLAGS"
+dnl LDFLAGS="$save_LDFLAGS"
 
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile
+		 gui/Makefile])
 AC_OUTPUT
