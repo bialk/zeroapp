@@ -1,6 +1,4 @@
-COPYING
 FreeImage.dll
-INSTALL
 aclocal.m4
 install-sh
 libsigc-2.0-0.dll
