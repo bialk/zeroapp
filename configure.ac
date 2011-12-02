@@ -83,8 +83,8 @@ dnl LDFLAGS="$save_LDFLAGS"
 AC_CONFIG_FILES([Makefile
 		 src/Makefile])
 
-AC_CONFIG_SUBDIRS([mathlib/lapackcpp
-                   mathlib/lineqsolver
-                   mathlib/matpro])
+dnl AC_CONFIG_SUBDIRS([mathlib/lapackcpp
+dnl                    mathlib/lineqsolver
+dnl                   mathlib/matpro])
 
 AC_OUTPUT
