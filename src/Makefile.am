@@ -18,7 +18,7 @@ lights.cpp lights.h\
 viewsurf.cpp viewsurf.h \
 imageplane.cpp imageplane.h \
 matting.cpp matting.h \
-shapefromshade.cpp shapefromshade.h normsfromshade.h \
+shapefromshade.cpp shapefromshade.h normfromshade.h \
 lineqsol.cpp \
 ImageTile.cpp ImageTile.h \
 ../apputil/eventballfltk.cpp ../apputil/eventballfltk.h \
