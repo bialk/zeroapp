@@ -40,7 +40,7 @@ zeroappdir = $(datadir)/$(PACKAGE_NAME)
 zeroapp_DATA = torch.ico index.html 
 PACKAGE_SHAREDIR = $(zeroappdir)
 
-if WIN32
+if MINGW32
 
 zeroapp_CPPFLAGS = -w -I$(top_srcdir) -I$(HOME)/include -I$(HOME)/lib/sigc++-2.0/include -DPACKAGE_SHAREDIR=\"$(zeroappdir)\"
 zeroapp_LDFLAGS =  -mwindows  -mno-cygwin -L/usr/X11R6/lib -L$(HOME)/lib 

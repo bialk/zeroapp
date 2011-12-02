@@ -1,11 +1,12 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl AC_INIT (package, version, [bug-report], [tarname])
+AC_PREREQ([2.65])
 AC_INIT([zeroapp], [0.1.0],
         [Alexander Blinov <pubbialk@list.ru>],
         [zeroapp])
 AM_INIT_AUTOMAKE
 
-AC_CONFIG_SRCDIR([gui/mainini.cpp])
+AC_CONFIG_SRCDIR([src/mainini.cpp])
 AC_CONFIG_HEADERS([config.h])
 
 dnl Checks for programs.
@@ -29,7 +30,7 @@ dnl          AC_MSG_RESULT([no])
 dnl          ;;
 dnl esac
 dnl AM_CONDITIONAL(WIN32, test $win32 = true)
-AM_CONDITIONAL(WIN32, [test $host_os = "mingw32"])
+AM_CONDITIONAL(MINGW32, [test x$host_os = x"mingw32"])
 
 dnl togle between debug or release switch
 dnl CXXFLAGS="-w -O5"
@@ -58,7 +59,7 @@ dnl PKG_CHECK_MODULES does now work on mingw (macros is not defined)
 dnl PKG_CHECK_MODULES(SIGC,sigc++-2.0 >= 2.2.4)
 
 
-if test -z ${WIN32_TRUE}; then
+if test x${host_os} = x"mingw32"; then
 
 AC_CHECK_LIB(flu, main, ,[echo "Im afraid we need flu library:(."; exit 1],[-lopengl32])
 
@@ -80,7 +81,7 @@ dnl LDFLAGS="$save_LDFLAGS"
 
 
 AC_CONFIG_FILES([Makefile
-		 gui/Makefile])
+		 src/Makefile])
 
 AC_CONFIG_SUBDIRS([mathlib/lapackcpp
                    mathlib/lineqsolver
