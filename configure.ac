@@ -9,7 +9,7 @@ AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([src/mainini.cpp])
 AC_CONFIG_HEADERS([config.h])
 
-dnl Checks for programs.
+# Checks for programs.
 AC_PROG_CXX
 AC_PROG_CPP
 AC_PROG_INSTALL
@@ -18,30 +18,10 @@ AC_PROG_INSTALL
 AC_CANONICAL_HOST
 AC_MSG_CHECKING([checking type of OS for specific settings])
 AC_MSG_RESULT([$host_os])
-dnl case "$host_os" in
-dnl *linux*)
-dnl 	win32=true
-dnl         AC_MSG_RESULT([yes])
-dnl  	AC_CHECK_TOOL(WINDRES, windres)
-dnl  	;;
-dnl  *)
-dnl          win32=false
-dnl          AC_MSG_RESULT([no])
-dnl          ;;
-dnl esac
-dnl AM_CONDITIONAL(WIN32, test $win32 = true)
 AM_CONDITIONAL(MINGW32, [test x$host_os = x"mingw32"])
 
-dnl togle between debug or release switch
-dnl CXXFLAGS="-w -O5"
-dnl CXXFLAGS="-w -g"
-dnl or use propriate command string 
-dnl ./configure CXXFLAGS="..."
 
-dnl Checks for libraries.
-dnl save_LDFLAGS="$LDFLAGS"
-dnl LDFLAGS="$LDFLAGS -L/usr/X11R6/lib64 -L/usr/X11R6/lib -L$HOME/lib -lstdc++"
-dnl AC_CHECK_LIB(matpro, main, ,[echo "Im afraid we need matpro library:(."; exit 1])
+# we also looking in home directory
 LDFLAGS="-L$HOME/lib $LDFLAGS"
 
 AC_CHECK_LIB(m, main, ,[echo "Im afraid we need m library:(."; exit 1])

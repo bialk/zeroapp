@@ -43,7 +43,7 @@ PACKAGE_SHAREDIR = $(zeroappdir)
 if MINGW32
 
 zeroapp_CPPFLAGS = -w -I$(top_srcdir) -I$(HOME)/include -I$(HOME)/lib/sigc++-2.0/include -DPACKAGE_SHAREDIR=\"$(zeroappdir)\"
-zeroapp_LDFLAGS =  -mwindows  -mno-cygwin -L/usr/X11R6/lib -L$(HOME)/lib 
+zeroapp_LDFLAGS =  -mwindows  -mno-cygwin --enable-auto-import -L/usr/X11R6/lib -L$(HOME)/lib 
 # -mconsole this flag needs for console
 # the sequense "-llapack -lg2c -lblas"  was added to solve linker problem
 # the sequense "-lfltk_jpeg -lfltk_png -lz"  was added to support Fl_Help_Dialog 
