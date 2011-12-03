@@ -3,9 +3,16 @@ bin_PROGRAMS = zeroapp
 zeroapp_SOURCES = mainini.cpp \
 ../apputil/AppSysSet.cpp ../apputil/AppSysSet.h \
 ../apputil/serializer.cpp ../apputil/serializer.h \
+../apputil/signals.h ../apputil/eventball.h \
+../mathlib/mathutl/meshandalg.h \
+../mathlib/mathutl/mymath.h \
+../mathlib/matpro/matrix.h \
+../mathlib/mathutl/imageandfft.h \
+../mathlib/lapackcpp/lapackcpp.h \
+../mathlib/mathutl/matchalg.h \
 eventlog.cpp eventlog.h \
 toolspanel.cpp \
-mathstruct.cpp \
+mathstruct.cpp mathstruct.h \
 mousectrl.cpp mousectrl.h \
 savejpeg.cpp \
 glhelper.cpp savejpeg.h LoadImageToVec.h \
@@ -19,7 +26,7 @@ viewsurf.cpp viewsurf.h \
 imageplane.cpp imageplane.h \
 matting.cpp matting.h \
 shapefromshade.cpp shapefromshade.h normfromshade.h \
-lineqsol.cpp \
+lineqsol.cpp lineqsol.h \
 ImageTile.cpp ImageTile.h \
 ../apputil/eventballfltk.cpp ../apputil/eventballfltk.h \
 fltk_calllist.cpp fltk_calllist.h fltk_animator.h fltk_defs.h \
@@ -37,7 +44,7 @@ frmMattingUI.cxx frmMattingUI.h \
 frmMatting.cpp frmMatting.h
 
 zeroappdir = $(datadir)/$(PACKAGE_NAME)
-zeroapp_DATA = torch.ico index.html 
+dist_zeroapp_DATA = torch.ico index.html 
 PACKAGE_SHAREDIR = $(zeroappdir)
 
 if MINGW32
