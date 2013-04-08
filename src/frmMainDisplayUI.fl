@@ -1,5 +1,5 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0107 
+version 1.0110 
 header_name {.h} 
 code_name {.cxx}
 widget_class GLDisplay {open
@@ -14,8 +14,8 @@ widget_class GLDisplay {open
 } 
 
 widget_class MsgGroupUI {open
-  xywh {759 172 175 25} type Double
-  class Fl_Group visible position_relative
+  xywh {759 172 175 25} type Double hide
+  class Fl_Group position_relative
 } {
   decl {int handle(int event);} {public
   }
@@ -35,12 +35,12 @@ class MainDisplay {open
     code {frmmaindisplay = v;} {}
     Fl_Window mainwnd {
       label {3D Zero Application  0.0.1} open
-      xywh {234 144 780 550} type Double align 0 resizable
+      xywh {231 132 780 550} type Double align 0 resizable
       code0 {\#include <iostream>}
       code1 {\#include <FL/Fl_Help_Dialog.h>}
-      code2 {\#include "dispview.h"} visible
+      code2 {\#include "src/dispview.h"} visible
     } {
-      Fl_Menu_Bar mainmenu {open selected
+      Fl_Menu_Bar mainmenu {open
         xywh {0 0 595 25}
       } {
         Submenu menu_main {
@@ -105,8 +105,8 @@ class MainDisplay {open
       Fl_Group {} {open
         xywh {0 25 30 525}
       } {
-        Fl_Button {} {
-          image {../../../../../usr/share/pixmaps/comps/base-system.png} xywh {0 25 30 30}
+        Fl_Button {} {selected
+          xywh {0 25 30 30}
         }
         Fl_Group {} {open
           xywh {0 405 30 145} resizable
@@ -119,7 +119,7 @@ class MainDisplay {open
     }
     Fl_Window aboutwnd {
       label {About 3D Plastic Surgery Simulator 0.3.0}
-      xywh {377 187 360 260} type Double modal visible
+      xywh {377 187 360 260} type Double hide modal
     } {
       Fl_Box aboutwndbox {
         label {3D Zero Application ver. 0.1.0}
@@ -144,7 +144,7 @@ class MainDisplay {open
     }
     Fl_Window msgwnd {
       label {Message Log} open
-      xywh {470 186 535 350} type Double resizable visible
+      xywh {470 186 535 350} type Double hide resizable
     } {
       Fl_Text_Display msgdsp {
         xywh {5 5 525 310}
@@ -163,6 +163,6 @@ class MainDisplay {open
 
 declblock {//header for sourcefile} {open public after {//end of headers}
 } {
-  decl {\#include "eventhnd.h"} {public
+  decl {\#include "src/eventhnd.h"} {public
   }
 } 

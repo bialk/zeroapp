@@ -1,4 +1,4 @@
-#include "config.h"
+//#include "config.h"
 #include "frmMainDisplay.h"
 #include "apputil/serializer.h"
 #include "apputil/AppSysSet.h"
@@ -89,9 +89,9 @@ void frmMainDisplay::Init(){
   frmprjtree->Init();
 
   ui->build->label("Build: "__DATE__);
-  ui->mainwnd->label("3D Zero Application " PACKAGE_VERSION);
-  ui->aboutwnd->label("About 3D Zero Application " PACKAGE_VERSION);
-  ui->aboutwndbox->label("3D Zero Application ver. " PACKAGE_VERSION);
+  ui->mainwnd->label("3D Zero Application " "PACKAGE_VERSION");
+  ui->aboutwnd->label("About 3D Zero Application " "PACKAGE_VERSION");
+  ui->aboutwndbox->label("3D Zero Application ver. " "PACKAGE_VERSION");
 
   CONNECT(ui->mainmenu,frmMainDisplay::mainmenu);
   CONNECT(ui->mainwnd,frmMainDisplay::quit);

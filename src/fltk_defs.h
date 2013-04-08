@@ -18,4 +18,4 @@ inline int button_with_state(int btn, int sca=0){
     ((sca&FL_ALT) ? Fl::event_state(FL_ALT)   : !Fl::event_state(FL_ALT) );
 }
 
-#endif fltk_etc_h
+#endif //fltk_etc_h

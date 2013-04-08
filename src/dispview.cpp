@@ -165,7 +165,7 @@ void DispView::snapshot(){
   glReadPixels( 0, 0, x,y, GL_RGB, GL_UNSIGNED_BYTE, data );
   char *buf = new char[x*3];
   char filename[20];  
-  sprintf(filename,"image_%03i.jpeg",nsnap++);
+  sprintf(filename,"image_%03li.jpeg",nsnap++);
   savejpeg(filename,data,x,y);
   delete data;
   delete buf;

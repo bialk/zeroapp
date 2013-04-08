@@ -4,7 +4,6 @@
 #include <list>
 #include <GL/gl.h>
 #include "editviewobj.h"
-#include "apputil/signals.h"
 #include "eventhnd.h"
 #include <sigc++/sigc++.h>
 #include <memory>
