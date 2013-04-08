@@ -1,6 +1,0 @@
-[submodule "apputil"]
-	path = apputil
-	url = /var/bialk.git/apputil.git
-[submodule "mathlib"]
-	path = mathlib
-	url = /var/bialk.git/mathlib.git
