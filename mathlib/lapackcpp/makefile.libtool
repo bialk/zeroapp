@@ -1,0 +1,51 @@
+## install dir
+INSTDIR=$(HOME)/lib
+VERSION=0:0:0
+
+
+#options for linking 
+#===================
+LNKOPT=-g -fPIC
+LIBNAME=liblapackcpp.la
+GCCOPT=-g -fPIC
+
+#CXX=g++
+
+## path for compilation
+SRCPATH=
+IPATH=
+LPATH=
+
+$(LIBNAME): eigenval.lo leastsquare.lo
+	libtool --mode=link $(CXX) $(LNKOPT) -version-info $(VERSION) -o $(LIBNAME) -rpath $(INSTDIR) eigenval.lo leastsquare.lo -L/usr/lib64 -llapack -lblas -lg2c
+	##../../LAPACK/lapack_LINUX.a  ../../LAPACK/blas_LINUX.a -lg2c
+	## $(INSTDIR)
+	##
+	## Make done!
+
+
+install: $(LIBNAME)
+	libtool --mode=install cp $(LIBNAME) $(INSTDIR)/$(LIBNAME)
+
+uninstall:
+	libtool --mode=uninstall rm -f $(INSTDIR)/$(LIBNAME) 
+	#
+	## Library $(LIBNAME) has been removed from $(INSTDIR)
+
+clean:
+	libtool --mode=clean rm -f $(LIBNAME) *.o *.lo core *.core
+
+
+eigenval.lo: eigenval.cpp lapackcpp.h
+	libtool --mode=compile $(CXX) $(GCCOPT) -c eigenval.cpp
+
+leastsquare.lo: leastsquare.cpp lapackcpp.h
+	libtool --mode=compile $(CXX) $(GCCOPT) -c leastsquare.cpp
+
+##smooth_vect.lo: smooth_vect.cpp smooth_vect.h 
+##	libtool --mode=compile $(CXX) $(GCCOPT) -c smooth_vect.cpp
+
+##matrix.lo: matrix.cpp matrix.h 
+##	libtool --mode=compile $(CXX) $(GCCOPT) -c matrix.cpp
+
+

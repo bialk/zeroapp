@@ -1,0 +1,68 @@
+## install dir
+INSTDIR=$(HOME)/lib
+
+# options for static linking (does not work properly options incorrect)
+#===========================
+#LNKOPT=-nostartfiles -Xlinker -r -Xlinker -dn
+#LIBNAME=libmatpro.a
+#GCCOPT=-w -exeption -g
+
+#options for dynamic linking 
+#===========================
+LNKOPT=-fPIG -shared  
+LIBNAME=libmatpro.so
+GCCOPT=-fPIC -w -exeption -g
+
+## you need define the path to the dynamic library one of this two ways 
+## The first way: 
+## one needs to add this line to the LNKOPT to define the relation path to your library 
+## -Xlinker -h../Data_Access/libdata3d.so
+## do not forget to remove the line cp  libdata3d.so /user/cvsspug/eex1ab/dlib/
+## The second way: 
+## set the environiment variable to for dll path search and place the library in that dir.
+## setenv LD_LIBRARY_PATH /user/cvsspug/eex1ab/dlib:$LD_LIBRARY_PATH
+
+## compiler command with common flags
+#CXX=g++3
+
+## path for compilation
+SRCPATH=
+IPATH=
+LPATH=
+
+
+$(LIBNAME): smooth_matrix.o smooth_vect.o matrix.o
+	$(CXX) $(LNKOPT) $(LPATH) -I. -o $(LIBNAME) \
+smooth_matrix.o \
+smooth_vect.o \
+matrix.o \
+-lm 
+	##
+	## Make done!
+
+
+install: $(LIBNAME)
+	cp  $(LIBNAME) $(INSTDIR)
+	chmod 644 $(INSTDIR)/$(LIBNAME)
+	##
+	## Library $(LIBNAME) has been installed into $(INSTDIR)
+	## Do not forget to add path to LD_LIBRARY_PATH
+
+uninstall:
+	rm -f $(INSTDIR)/$(LIBNAME) 
+	#
+	## Library $(LIBNAME) has been removed from $(INSTDIR)
+
+clean:
+	rm -f *.o core *.core
+
+smooth_matrix.o: smooth_matrix.cpp smooth_matrix.h
+	$(CXX) $(GCCOPT) -I. $(IPATH) -c  smooth_matrix.cpp
+
+smooth_vect.o: smooth_vect.cpp smooth_vect.h 
+	$(CXX) $(GCCOPT) -I. $(IPATH) -c  smooth_vect.cpp
+
+matrix.o: matrix.cpp matrix.h 
+	$(CXX) $(GCCOPT) -I. $(IPATH) -c  matrix.cpp
+
+

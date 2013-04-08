@@ -1,0 +1,40 @@
+#	usage: ./test msglvl msgFile type symmetryflag pivotingflag
+#	matrixFileName rhsFileName seed outXvectorFile
+#	msglvl -- message level
+#	msgFile -- message file
+#	type -- type of entries
+#	1 (SPOOLES.REAL) -- real entries
+#	2 (SPOOLES.COMPLEX) -- complex entries
+#	symmetryflag -- type of matrix
+#	0 (SPOOLES.SYMMETRIC) -- symmetric entries
+#	1 (SPOOLES.HERMITIAN) -- Hermitian entries
+#	2 (SPOOLES.NONSYMMETRIC) -- nonsymmetric entries
+#	pivotingflag -- type of pivoting
+#	0 (SPOOLES.NO.PIVOTING) -- no pivoting used
+#	1 (SPOOLES.PIVOTING) -- pivoting used
+#	matrixFileName -- matrix file name, format
+#	nrow ncol nent
+#	irow jcol entry
+#	...
+#	note: indices are zero based
+#	rhsFileName -- right hand side file name, format
+#	nrow nrhs 
+#	...
+#	jrow entry(jrow,0) ... entry(jrow,nrhs-1)
+#	...
+#	seed -- random number seed, used for ordering
+#	outXvectorFile  --  this text file with output vector X. n-th line correspond to the n-th 
+#	                    variable in vector X.
+
+
+#g++ mtrxagen.cpp -o mtrxagen
+#g++ mtrxbgen.cpp -o mtrxbgen
+./mtrxagen > data/mtrxa.txt
+./mtrxbgen > data/mtrxb.txt
+rm data/test.log
+make
+
+nice +19 ./solv_lineq 0 data/test.log 1 0 1 data/mtrxa.txt data/mtrxb.txt 666666 data/mtxx.txt
+
+#less data/test.log
+
