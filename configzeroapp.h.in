@@ -1,0 +1,8 @@
+#ifndef CONFIGZEROAPP_H_IN
+#define CONFIGZEROAPP_H_IN
+
+// the configured options and settings for Tutorial
+#define zeroapp_VERSION_MAJOR @zeroapp_VERSION_MAJOR@
+#define zeroapp_VERSION_MINOR @zeroapp_VERSION_MINOR@
+
+#endif // CONFIGZEROAPP_H_IN
