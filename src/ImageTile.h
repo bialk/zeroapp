@@ -2,7 +2,7 @@
 #define GLImageTile_h
 
 #include <vector>
-#include <GL/gl.h>
+#include <Fl/gl.h>
 
 class GLTexSetHandle{
  public:

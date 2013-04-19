@@ -1,7 +1,7 @@
 #ifndef viewctrl_h
 #define viewctrl_h
 
-#include <GL/gl.h>
+#include <Fl/gl.h>
 #include "editviewobj.h"
 #include "mathstruct.h"
 #include "mousectrl.h"

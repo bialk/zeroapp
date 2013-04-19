@@ -2,7 +2,7 @@
 #define dispview_h
 
 #include <list>
-#include <GL/gl.h>
+#include <Fl/gl.h>
 #include "editviewobj.h"
 #include "eventhnd.h"
 #include <sigc++/sigc++.h>
@@ -69,7 +69,7 @@ class DispView{
   GLuint GetNewName();
   sigc::signal<void> reselect;
   int selectid;
-  int SelectRst();
+  void SelectRst();
   int SelectObj(int x, int y);
 
   void AskForData(Serializer *s);

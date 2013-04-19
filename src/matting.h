@@ -8,7 +8,7 @@
 #include "eventhnd.h"
 #include "glhelper.h"
 #include "ImageTile.h"
-#include <GL/gl.h>
+#include <Fl/gl.h>
 #include <vector>
 #include <sigc++/sigc++.h>
 

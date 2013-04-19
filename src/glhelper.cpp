@@ -2,7 +2,7 @@
 #include "windows.h"
 #endif
 
-#include <GL/gl.h>
+#include <Fl/gl.h>
 #include <GL/glu.h>
 
 #include "glhelper.h"
@@ -26,7 +26,7 @@ void CompoundTexture::SetTexture(float *rgb,int rgbx, int rgby, int brd){
   // the smalest fragment can be used is 64 the bigest is depends from hardware. 
   // the nearest fragments of power of 2 is used to cover whole texture with overlap
   // i.e. if the texture size 150x240 then separate frament size is 128x128 (nearest power of 2 to 150)
-  maxtxs=std::max(64,std::min(maxtxs,2<<int(log(std::min(rgby,rgbx))/log(2))));
+  maxtxs=std::max(64,std::min(maxtxs,2<<int(log((float)std::min(rgby,rgbx))/log(2.0f))));
   // printf("%i\n",maxtxs);
   maxtxs=maxtxs-2*border;    
   std::vector<float> bff((maxtxs+2*border)*(maxtxs+2*border)*3);
@@ -394,7 +394,7 @@ float glInvMat(float *m){
 
 
 float glInvMat(float *m){
-  Lapackcpp().Invert(4,m);  
+  return Lapackcpp().Invert(4,m);
 }
 
 

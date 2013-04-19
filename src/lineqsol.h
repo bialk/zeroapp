@@ -2,7 +2,7 @@
 #define lineqsol_h
 
 extern "C" {
-#include <spooles/InpMtx.h>
+#include <InpMtx.h>
 }
 
 class LinSolver{

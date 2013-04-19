@@ -42,7 +42,7 @@ public:
 
 //======================================================================
 
-int ShapeFromShade::build(){
+void ShapeFromShade::build(){
 
   // calculating normals and albedo from shadow
   int ix,iy;

@@ -2,7 +2,9 @@
 #include <FreeImage.h>
 #include <GL/glext.h>
 #include <sys/types.h>
+#ifndef WIN32
 #include <unistd.h>
+#endif
 #include "apputil/serializer.h"
 #include "glhelper.h"
 #include "dispview.h"

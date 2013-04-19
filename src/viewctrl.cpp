@@ -70,11 +70,19 @@ void ViewCtrl::fplay(){
 }
 
 
-ViewCtrl::~ViewCtrl(){}
-ViewCtrl::ViewCtrl():
-prjtype(0), play(0),background(0),drawsimple(1),
-glroshow(0),zoom(1),
-viewctrleh(this)
+ViewCtrl::~ViewCtrl()
+{
+}
+
+ViewCtrl::ViewCtrl()
+    :play_method(0)
+    ,prjtype(0)
+    ,play(0)
+    ,background(0)
+    ,drawsimple(1)
+    ,glroshow(0)
+    ,zoom(1)
+    ,viewctrleh(this)
 {
   // initialize default parameters
   mssh.m =PrjMtrxRender;

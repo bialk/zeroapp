@@ -17,7 +17,7 @@ public:
   float* data_norm; //(w*h*3);
   float* data_attd; //(w*h);
 
-  int build();
+  void build();
 };
 
 #endif

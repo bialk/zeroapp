@@ -1,9 +1,9 @@
 #include "lineqsol.h"
 
 extern "C" {
-#include <spooles/misc.h>
-#include <spooles/FrontMtx.h> 
-#include <spooles/SymbFac.h>
+#include <misc.h>
+#include <FrontMtx.h>
+#include <SymbFac.h>
 }
 /*--------------------------------------------------------------------*/ 
 

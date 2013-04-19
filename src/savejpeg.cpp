@@ -1,15 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>    
+
+#ifndef WIN32
 extern "C" {
 #include <jpeglib.h>
 }
+#endif
 #include "eventlog.h"
 
+extern "C" int gettimeofday(struct timeval *tv, struct timezone *tz)
+{
+    return 0;
+}
 
 void savejpeg(const char *filename, const unsigned char *image_buf, 
 	      long image_width, long image_height){
-
+#ifndef WIN32
   /* Points to large array of R,G,B-order data */
 
   JSAMPLE *image_buffer = (JSAMPLE *)image_buf;  
@@ -49,4 +56,6 @@ void savejpeg(const char *filename, const unsigned char *image_buf,
   jpeg_write_scanlines(&cinfo, row_pointer, cinfo.image_height);
   jpeg_finish_compress(&cinfo);
   jpeg_destroy_compress(&cinfo);
+#endif
 }
+

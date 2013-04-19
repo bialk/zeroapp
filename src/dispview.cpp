@@ -144,7 +144,7 @@ GLuint DispView::GetNewName(){
 }
 
 
-int DispView::SelectRst(){
+void DispView::SelectRst(){
   selectid=-1;
 }
 
