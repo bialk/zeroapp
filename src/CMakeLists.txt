@@ -172,8 +172,13 @@ INCLUDE_DIRECTORIES(${FREEIMAGE_INCLUDE_DIR})
 
 ####################### spooles ##################
 
-FIND_LIBRARY(SPOOLES_LIB spooles PATH_SUFFIXES spooles-build/src)
-FIND_PATH(SPOOLES_INCLUDE_DIR InpMtx.h PATH_SUFFIXES spooles/include)
+if(WIN32)
+  FIND_LIBRARY(SPOOLES_LIB spooles PATH_SUFFIXES spooles-build/src)
+  FIND_PATH(SPOOLES_INCLUDE_DIR InpMtx.h PATH_SUFFIXES spooles/include)
+else(WIN32)
+  FIND_LIBRARY(SPOOLES_LIB spooles_I32)
+  FIND_PATH(SPOOLES_INCLUDE_DIR InpMtx.h PATH_SUFFIXES spooles)
+endif(WIN32)
 INCLUDE_DIRECTORIES(${SPOOLES_INCLUDE_DIR})
 
 ################# LAPACK #########################
