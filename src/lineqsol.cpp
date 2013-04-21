@@ -1,10 +1,13 @@
 #include "lineqsol.h"
 
 extern "C" {
+#include <spoolesMT.h>
 #include <misc.h>
-#include <FrontMtx.h>
 #include <SymbFac.h>
 }
+
+#define MT_SUPPORT
+
 /*--------------------------------------------------------------------*/ 
 
 
@@ -65,7 +68,7 @@ float LinSolver::X(int irow){
   DenseMtx_realEntry (mtxX, irow, 0, &v);
   //double img;
   //DenseMtx_complexEntry (mtxX, irow, 0, &v,&img);
-  return v;
+  return (float)v;
 }
 
 
@@ -101,14 +104,10 @@ void LinSolver::solve() {
   IVL           *adjIVL=0, *symbfacIVL=0 ; 
 
   double droptol, tau; 
-  double cpus[10] ; 
-  int error, msglvl, nedges;  
+  double cpus[20] ;
+  int stats[10] ;
+  int error, msglvl, nedges;
   int *newToOld=0, *oldToNew=0 ; 
-  int stats[20] ; 
-
-  double v;
-  int i;
-
 
 
   //some default values
@@ -116,7 +115,7 @@ void LinSolver::solve() {
   tau = 100.; 
 
   // message level default (0)
-  msglvl = 0 ; 
+  msglvl = 0 ;
   
   //msgFile 
   FILE *msgFile = stdout;
@@ -141,7 +140,7 @@ void LinSolver::solve() {
   seed = 666666;
   
 
-  InpMtx_changeStorageMode(mtxA, INPMTX_BY_VECTORS) ; 
+  InpMtx_changeStorageMode(mtxA, INPMTX_BY_VECTORS) ;
 
   /*
     ------------------------------------------------- 
@@ -181,16 +180,16 @@ void LinSolver::solve() {
 
   //28 SPOOLES 2.2 -- Solving Linear Systems April 29, 2002 
 
-  ETree_permuteVertices(frontETree, oldToNewIV) ; 
-  InpMtx_permute(mtxA, oldToNew, oldToNew) ; 
+  ETree_permuteVertices(frontETree, oldToNewIV) ;
+  InpMtx_permute(mtxA, oldToNew, oldToNew) ;
   if ( symmetryflag == SPOOLES_SYMMETRIC
        || symmetryflag == SPOOLES_HERMITIAN ) {
     InpMtx_mapToUpperTriangle(mtxA) ; 
   }
-  InpMtx_changeCoordType(mtxA, INPMTX_BY_CHEVRONS) ; 
+  InpMtx_changeCoordType(mtxA, INPMTX_BY_CHEVRONS) ;
   InpMtx_changeStorageMode(mtxA, INPMTX_BY_VECTORS) ; 
   DenseMtx_permuteRows(mtxY, oldToNewIV) ; 
-  symbfacIVL = SymbFac_initFromInpMtx(frontETree, mtxA) ; 
+  symbfacIVL = SymbFac_initFromInpMtx(frontETree, mtxA) ;
   if ( msglvl > 2 ) {
     /*
     fprintf(msgFile, "\n\n old-to-new permutation vector") ; 
@@ -222,10 +221,11 @@ void LinSolver::solve() {
 
   frontmtx = FrontMtx_new() ; 
   mtxmanager = SubMtxManager_new() ; 
-  SubMtxManager_init(mtxmanager, NO_LOCK, 0) ; 
+  SubMtxManager_init(mtxmanager, LOCK_IN_PROCESS, 0) ;
   FrontMtx_init(frontmtx, frontETree, symbfacIVL, type, symmetryflag,
-		FRONTMTX_DENSE_FRONTS, pivotingflag, NO_LOCK, 0, NULL, mtxmanager, msglvl, msgFile) ;
-  /*--------------------------------------------------------------------*/ 
+        FRONTMTX_DENSE_FRONTS, pivotingflag, LOCK_IN_PROCESS, 0, NULL, mtxmanager, msglvl, msgFile) ;
+
+  /*--------------------------------------------------------------------*/
   printf("step 5 passed!\n");
 
   /*
@@ -233,12 +233,26 @@ void LinSolver::solve() {
     STEP 6: compute the numeric factorization 
     ----------------------------------------- 
   */ 
+
   chvmanager = ChvManager_new() ; 
-  ChvManager_init(chvmanager, NO_LOCK, 1) ; 
-  DVfill(10, cpus, 0.0) ; 
-  IVfill(20, stats, 0) ; 
-  rootchv = FrontMtx_factorInpMtx(frontmtx, mtxA, tau, droptol,
-				  chvmanager, &error, cpus, stats, msglvl, msgFile) ; 
+  ChvManager_init(chvmanager, LOCK_IN_PROCESS, 1) ;
+  DVfill(20, cpus, 0.0) ;
+  IVfill(10, stats, 0) ;
+#ifdef MT_SUPPORT
+  int nthread=3, nfront;
+  if ( nthread > (nfront = FrontMtx_nfront(frontmtx)) ) {
+    nthread = nfront ;
+  }
+  DV* cumopsDV = DV_new() ;
+  DV_init(cumopsDV, nthread, NULL) ;
+  IV *ownersIV = ETree_ddMap(frontETree, type, symmetryflag, cumopsDV, 1./(2.*nthread)) ;
+  rootchv = FrontMtx_MT_factorInpMtx(frontmtx, mtxA, tau, droptol,chvmanager,
+                                     ownersIV, 0,
+                                     &error, cpus, stats, msglvl, msgFile) ;
+#else
+  rootchv = FrontMtx_factorInpMtx(frontmtx, mtxA, tau, droptol, chvmanager,
+                                  &error, cpus, stats, msglvl, msgFile) ;
+#endif
   ChvManager_free(chvmanager) ;
   InpMtx_free(mtxA) ; mtxA = 0;
  
@@ -280,11 +294,27 @@ void LinSolver::solve() {
     STEP 8: solve the linear system 
     ------------------------------- 
   */ 
+
   mtxX = DenseMtx_new();
   DenseMtx_init(mtxX, type, 0, 0, neqns, nrhs, 1, neqns);
   DenseMtx_zero(mtxX);
+
+#ifdef MT_SUPPORT
+  SolveMap *solvemap = SolveMap_new() ;
+  SolveMap_ddMap(solvemap, symmetryflag, FrontMtx_upperBlockIVL(frontmtx),
+                 FrontMtx_lowerBlockIVL(frontmtx), nthread, ownersIV,
+                 FrontMtx_frontTree(frontmtx), seed, msglvl, msgFile);
+  FrontMtx_MT_solve(frontmtx, mtxX, mtxY, mtxmanager, solvemap,
+                    cpus, msglvl, msgFile);
+
+  // release structures for MultiThread support
+  SolveMap_free(solvemap);
+  IV_free(ownersIV);
+  DV_free(cumopsDV);
+#else
   FrontMtx_solve(frontmtx, mtxX, mtxY, mtxmanager,
-		 cpus, msglvl, msgFile);
+                 cpus, msglvl, msgFile);
+#endif
   if ( msglvl > 2 ) {
     //fprintf(msgFile, "\n\n solution matrix in new ordering");
     //DenseMtx_writeForHumanEye(mtxX, msgFile);
@@ -297,7 +327,7 @@ void LinSolver::solve() {
     ------------------------------------------------------- 
     STEP 9: permute the solution into the original ordering 
     ------------------------------------------------------- */ 
-  DenseMtx_permuteRows(mtxX, newToOldIV) ; 
+  DenseMtx_permuteRows(mtxX, newToOldIV) ;
   if ( msglvl > 0 ) {
     //fprintf(msgFile, "\n\n solution matrix in original ordering") ; 
     //DenseMtx_writeForHumanEye(mtxX, msgFile) ; fflush(msgFile) ;
@@ -313,7 +343,7 @@ void LinSolver::solve() {
     ----------- 
   */ 
 
-  FrontMtx_free(frontmtx) ; 
+  FrontMtx_free(frontmtx) ;
   // DenseMtx_free(mtxX) ; 
   DenseMtx_free(mtxY) ; mtxY=0; 
   IV_free(newToOldIV) ; 
