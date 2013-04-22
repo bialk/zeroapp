@@ -27,7 +27,7 @@ LDFLAGS="-L$HOME/lib $LDFLAGS"
 AC_CHECK_LIB(m, main, ,[echo "Im afraid we need m library:(."; exit 1])
 AC_CHECK_LIB(lapackcpp, main, ,[echo "Im afraid we need lapackcpp library. :("; exit 1] )
 AC_CHECK_LIB(freeimage, main, ,[echo "Im afraid we need freeimage library. :("; exit 1] )
-AC_CHECK_LIB(spooles_I32, main, ,[echo "Im afraid we need spooles_I32 library. :("; exit 1],[-lm])
+AC_CHECK_LIB(spooles, main, ,[echo "Im afraid we need spooles library. :("; exit 1],[-lm])
 AC_CHECK_LIB(fltk, main, ,[echo "Im afraid we need fltk library:(."; exit 1])
 AC_CHECK_LIB(fltk_gl, main, ,[echo "Im afraid we need fltk_gl library:(."; exit 1])
 AC_CHECK_LIB(fltk_images, main, ,[echo "Im afraid we need fltk_images library:(."; exit 1])
