@@ -58,7 +58,9 @@ void LinSolver::MtrxB(){
   DenseMtx_zero(mtxY); 
 }
 void LinSolver::B(int irow, float v){
-  DenseMtx_setRealEntry(mtxY, irow, 0, v) ;
+  double v1;
+  DenseMtx_realEntry (mtxY, irow, 0, &v1);
+  DenseMtx_setRealEntry(mtxY, irow, 0, v1+v) ;
   //DenseMtx_setComplexEntry(mtxY, irow, jrhs, real, imag) ; 
 }
 

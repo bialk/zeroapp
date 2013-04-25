@@ -8,38 +8,6 @@
 //#include <unistd.h> // is definition of function sleep()
 #include "lineqsol.h"
 
-
-//======================================================================
-
-class indx{
-public:
-  int i,j;
-  indx(): i(0),j(0){}
-  indx(int ii, int jj):i(ii),j(jj){}
-  bool operator < (const indx &p) const{
-    return i<p.i || (i==p.i && j<p.j);
-  }
-};
-
-//sparce matrix & righthand vector  
-class KMtrx: public std::map<indx,float>{
-public:
-  float& operator()(int i, int j){      
-    iterator it =  insert(value_type(indx(i,j),0)).first;
-    return it->second;
-  }
-};
-
-class BMtrx: public std::map<int,float>{
-public:
-  float& operator()(int i){      
-    iterator it =  insert(value_type(i,0)).first;
-    return it->second;
-  }
-};
-
-
-
 //======================================================================
 
 void ShapeFromShade::build(){
@@ -90,84 +58,71 @@ void ShapeFromShade::build(){
   
 
 
-  // assembling matrix A
-  KMtrx mtrk;
-  BMtrx mtrb;
+  // assembling matrices A & B
 
-  class TCntrElem{    
+  LinSolver lsvr;
+  int sizem = h*w;
+  lsvr.MtrxA(sizem,sizem,sizem*3);
+  lsvr.MtrxB();
+
+  class TCntrElem{
   public:
-    int szy;
-    int w;
-    float *d;
-    float GetElem(int x, int y, int z){
-      return d[(w*y+x)*3+z];
-    }
-    void add2mtrx(KMtrx &m,BMtrx &b, int x, int y){
-      int i,j;
-      int x1,x2,y1,y2;
-      for(i=0;i<4;i++){
-	x1 = i/2; y1 = i%2;	  
-	int idx1=(x+x1)*szy+(y+y1); // '-1' the matrix has size (szy*szx - 1)
-	float z  = GetElem(x+x1,y+y1,2); 
-	if(z<0.1) z=0.1;
-	float gx = -GetElem(x+x1,y+y1,0)/z;
-	float gy = -GetElem(x+x1,y+y1,1)/z;
-	float sum = ((0.5-x1)*gx+(0.5-y1)*gy)*3;	
-	m(idx1,idx1) -= 3;
-	for(j=0;j<4;j++){
-	  if(i==j) continue;
-	  x2 = j/2; y2 = j%2;	  
-	  int idx2=(x+x2)*szy+(y+y2);
-	  m(idx1,idx2)+= 1;
-	  z  = GetElem(x+x2,y+y2,2);  if(z<0.1) z=0.1;
-	  gx = -GetElem(x+x2,y+y2,0)/z;
-	  gy = -GetElem(x+x2,y+y2,1)/z;	  
-	  sum -= ((0.5-x2)*gx+(0.5-y2)*gy);
-	}
-	if(sum!=0.0) b(idx1) += sum; 
+      TCntrElem(LinSolver& lsvr, int w, int h, float * const data)
+          :m_lsvr(lsvr)
+          ,m_w(w)
+          ,m_h(h)
+          ,m_d(data)
+      {}
+      void add2mtrx(int x, int y){
+          int i,j;
+          int x1,x2,y1,y2;
+          for(i=0;i<4;i++){
+              x1 = i/2; y1 = i & 0x1;
+              int idx1=(x+x1)*m_h+(y+y1); // '-1' the matrix has size (szy*szx - 1)
+              float z  = GetElem(x+x1,y+y1,2);
+              if(z<0.1) z=0.1;
+              float gx = -GetElem(x+x1,y+y1,0)/z;
+              float gy = -GetElem(x+x1,y+y1,1)/z;
+              float sum = ((0.5-x1)*gx+(0.5-y1)*gy)*3;
+              m_lsvr.A(idx1,idx1,-3.0);
+              for(j=0;j<4;j++){
+                  if(i==j) continue;
+                  x2 = j/2; y2 = j & 0x1;
+                  int idx2=(x+x2)*m_h+(y+y2);
+                  m_lsvr.A(idx1,idx2,1.0);
+                  z  = GetElem(x+x2,y+y2,2);  if(z<0.1) z=0.1;
+                  gx = -GetElem(x+x2,y+y2,0)/z;
+                  gy = -GetElem(x+x2,y+y2,1)/z;
+                  sum -= ((0.5-x2)*gx+(0.5-y2)*gy);
+              }
+              if(sum!=0.0)
+                  m_lsvr.B(idx1,sum);
+          }
       }
-    }
-  } cntrelem; 
-  cntrelem.w=w;
-  cntrelem.d=data_norm; 
-  cntrelem.szy=h;
+  private:
+      LinSolver& m_lsvr;
+      int const m_h;
+      int const m_w;
+      float * const m_d;
+      float GetElem(int x, int y, int z){
+          return m_d[(m_w*y+x)*3+z];
+      }
+
+  } cntrelem(lsvr,w,h,data_norm);
 
   //scanning all internal nodes
   for(ix=0;ix<w-1;ix++){
     for(iy=0;iy<h-1;iy++){
-      cntrelem.add2mtrx(mtrk,mtrb,ix,iy);	
+      cntrelem.add2mtrx(ix,iy);
     }
   }
   // add boundary condition
-  int lasteqn = h*w;
-  mtrk(0,0)+=2;
-  //mtrb(lasteqn)=1;
-
-
-  LinSolver lsvr;
-
-  // fill up matrix A
-  KMtrx::iterator it;
-  int sizem = h*w;
-  lsvr.MtrxA(sizem,sizem,mtrk.size());
-  for(it=mtrk.begin();it!=mtrk.end();it++){    
-    lsvr.A(it->first.i,it->first.j,it->second);
-  }
-  mtrk.clear();
-
-  // fill up vector B
-  BMtrx::iterator itb;
-  lsvr.MtrxB();
-  for(itb=mtrb.begin();itb!=mtrb.end();itb++){
-    if(itb->second!=0)
-      lsvr.B(itb->first,itb->second);    
-  }
-  mtrb.clear();
+  lsvr.A(0,0,2.0);
 
   // solving system of linear equations
   lsvr.solve();
 
-  //moving result into into attitude data set
+  //get result back into attitude data set
   for(ix=0;ix<w;ix++)
     for(iy=0;iy<h;iy++){
       float a;
