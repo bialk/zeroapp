@@ -5,9 +5,12 @@ PROJECT( zeroapp )
 # The version number.
 
 #version MAJOR.MINOR.PATCH
-set (CMAKE_VERSION_MAJOR 0)
-set (CMAKE_VERSION_MINOR 1)
-set (CMAKE_PATCH_VERSION 1)
+set (zeroapp_VERSION_MAJOR 0)
+set (zeroapp_VERSION_MINOR 1)
+set (zeroapp_PATCH_VERSION 2)
+
+set (zeroapp_VERSION
+"${zeroapp_VERSION_MAJOR}.${zeroapp_VERSION_MINOR}.${zeroapp_PATCH_VERSION}")
 
 
 set (zeroapp_SHAREDIR ${CMAKE_ROOT}/bialk/zeroapp)

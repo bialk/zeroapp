@@ -215,7 +215,7 @@ int Lapackcpp::SVD( int m, float *a, float *s, float *u, float *vt){
           s[0], u[0], ldu, vt[0], ldvt,
           tmp, lwork, iwork[0], info );
 
-  lwork=tmp;
+  lwork=(int)tmp;
   if(info!=0){
     printf("error: info=%i lwork=%i\n",info,lwork);
     return info;

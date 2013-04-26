@@ -311,8 +311,7 @@ public:
 
     double bd[3];
     mc.start(); (mc(b,3,3).tran()*mc(c+6,3,1)).finish(bd);
-    float r[3];
-    std::copy(bd,bd+3,r);
+    float r[3] = {bd[0],bd[1],bd[2]};
     
     Lapackcpp().LeastSquare(3,3,a,bd,1);     
     normal[0]=bd[0];  normal[1]=bd[1];   normal[2]=bd[2];
@@ -368,8 +367,7 @@ public:
 
     double bd[12];
     mc.start(); (mc(b,3,4).tran()*mc(c+6,3,1)).finish(bd); 
-    float r[4];    
-    std::copy(bd,bd+4,r);
+    float r[4] = {bd[0],bd[1],bd[2],bd[4]};
 
     /*
     //  example of using LeastSquare method call
@@ -391,7 +389,7 @@ public:
 
     
     Lapackcpp().LeastSquare(4,3,a,bd,1);
-    std::copy(bd,bd+4,b);
+    b[0]=bd[0]; b[1]=bd[1]; b[2]=bd[2]; b[3]=bd[3];
 
     mc.start(); (mc(s,3,4).tran()*mc(b,3,1)-mc(r,4,1)).finish(b);
     mc.start(); (mc(b,1,4)*mc(b,4,1)).finish(b);

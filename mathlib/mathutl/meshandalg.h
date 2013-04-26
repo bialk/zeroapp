@@ -126,7 +126,7 @@ public:
     }
     f << surf->cnt.x << "\t" << surf->cnt.y << "\t" << surf->cnt.z << std::endl;
     f << surf->vtx.size() << "\t" << surf->edg.size() << "\t" << surf->trg.size() << std::endl;
-    int i;    
+    size_t i;
     for(i=0;i<surf->vtx.size();i++)
       f << surf->vtx[i].p.x << "\t" <<  surf->vtx[i].p.y << "\t"   
 	<< surf->vtx[i].p.z << "\t" <<  surf->vtx[i].d << std::endl;
@@ -147,7 +147,7 @@ public:
       err_printf(("Can't open file of surface (check the name: \"%s\") \n",name)); return 1; 
     }
     surf->clear();    
-    int i, sz;
+    size_t i, sz;
     f >> surf->cnt.x >> surf->cnt.y >> surf->cnt.z;
     f >> sz; surf->vtx.resize(sz);
     f >> sz; surf->edg.resize(sz);
@@ -183,7 +183,7 @@ class SurfLoadGTS{
 	Surf::TVtx vtx;
 	f >> vtx.p.x >> vtx.p.y >> vtx.p.z;
 	vtx.d=vtx.p.norma();
-	vtx.p=vtx.p*(1.0/vtx.d);
+    vtx.p=vtx.p*(1.0f/vtx.d);
 	vtx.d*=diam;
 	surf->vtx.push_back(vtx);	
       }

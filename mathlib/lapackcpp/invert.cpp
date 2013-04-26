@@ -141,7 +141,7 @@ int Lapackcpp::Invert( int m, float *a){
 
   int lwork=-1; float tmp;
   sgetri_(m, *a, lda, *ipiv, tmp, lwork, info );
-  lwork=tmp;
+  lwork=(int)tmp;
   if(info!=0){
     printf("error: info=%i lwork=%i\n",info,lwork);
     return info;
@@ -161,7 +161,7 @@ int Lapackcpp::Invert( int m, double *a){
 
   int lwork=-1; double tmp;
   dgetri_(m, *a, lda, *ipiv, tmp, lwork, info );
-  lwork=tmp;
+  lwork=(int)tmp;
   if(info!=0){
     printf("error: info=%i lwork=%i\n",info,lwork);
     return info;

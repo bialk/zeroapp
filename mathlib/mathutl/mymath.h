@@ -24,7 +24,7 @@
 #endif
 #endif
 
-inline long round(float x){	return (x>0)?(x+0.5):(x-0.5);	}
+inline long round(float x){	return int((x>0)?(x+0.5f):(x-0.5f));	}
 
 #ifndef INF
 #define INF 1e20
@@ -74,11 +74,11 @@ public:
 		koef = 1./sqrt(2*M_PI*sigm);
 		lnkoef = log(koef);
 	}
-	inline double Val(float x){		
-		return x-=a, koef*exp(b*x*x);
+    inline double Val(double x){
+        return x-=a, koef*exp(b*x*x);
 	}
-	inline double ValLn(float x){		
-		return x-=a,lnkoef + b*x*x;
+    inline double ValLn(double x){
+        return x-=a,lnkoef + b*x*x;
 	}
 };
 
@@ -114,7 +114,7 @@ inline void vnormal2(float &x, float &y, float &z,
 class NormOfSurf{
 public:
   void Build(int rangex, int rangey){
-    float n[3]; float ix,iy;
+    float n[3]; int ix,iy;
     // generating of normals in the cetral part of surface
     for(ix=1;ix<rangex-1;ix++){
       for(iy=1;iy<rangey-1;iy++){
@@ -223,7 +223,7 @@ class LinItp{
     float ix;
     init();
     for(ix=-20;ix<=1000;ix+=1){
-      float y=ix*4-12+float(rand())/RAND_MAX-0.5;
+      float y = ix*4-12+float(rand())/RAND_MAX-0.5f;
       add(y,ix);
     }
     solve();
@@ -234,7 +234,7 @@ class LinItp{
 class QuadItpl{
 public:
   double n,x,xx,xxx,xxxx,g,gx,gxx;
-  float a,b,x0;
+  double a,b,x0;
   void reset(){    
     a=b=x0=n=x=xx=xxx=xxxx=g=gx=gxx=0;
   }

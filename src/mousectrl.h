@@ -21,7 +21,7 @@ public:
   float shift_x, shift_y, shift_z;
 
   
-  inline float rad(float g){return g*M_PI/180; }
+  inline float rad(float g){return float(g*M_PI)/180; }
 
   MouseMoveAndShift();
   // state of operation

@@ -269,6 +269,27 @@ ENDIF(MINGW)
 ################## source include dir ################
 INCLUDE_DIRECTORIES( ${zeroapp_SOURCE_DIR} )
 
+
+################## c ompiler settings  ################
+
+IF(MSVC)
+  set(zeroapp_WIN32_OPTIONS
+        "-DNOMINMAX -D_USE_MATH_DEFINES -D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS")
+ENDIF(MSVC)
+
+if(MSVC)
+  # Force to always compile with W4
+  if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+    string(REGEX REPLACE "/W[0-4]" "/W2" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+  else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W2")
+  endif()
+elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+  # Update if necessary
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-long-long -pedantic")
+endif()
+
+
 ADD_LIBRARY( lapackcpp
     ../mathlib/lapackcpp/eigenval.cpp
     ../mathlib/lapackcpp/invert.cpp
@@ -361,15 +382,11 @@ INCLUDE_DIRECTORIES(
 #                    ${SPOOLES_INCLUDE_DIR}
 )
 
-IF(WIN32)
-  set(zeroapp_WIN32_OPTIONS "-DNOMINMAX -D_USE_MATH_DEFINES")
-ENDIF(WIN32)
-
 ADD_DEFINITIONS(
     ${zeroapp_WIN32_OPTIONS}
     -DPACKAGE_SHAREDIR="${zeroapp_SHAREDIR}"
     -DPACKAGE_NAME="${PROJECT_NAME}"
-    -DPACKAGE_VERSION="${CMAKE_VERSION}"
+    -DPACKAGE_VERSION="${zeroapp_VERSION}"
     ${sigc_DEFINITIONS}
 )
 
