@@ -17,7 +17,7 @@ EvthList::EvthList():modal(0){}
 void EvthList::Handle(EventBall *e){
   iterator it, it_next;
   for(it= begin();it!= end();it=it_next){
-    it_next=it; it_next++;
+    it_next=it;  it_next++;
     (*it)->Handle(e);    
   }
 }
