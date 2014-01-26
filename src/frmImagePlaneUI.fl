@@ -1,16 +1,16 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0107 
+version 1.0302 
 header_name {.h} 
 code_name {.cxx}
 class frmImagePlaneUI {open
 } {
-  decl {public:} {public
+  decl {public:} {public local
   }
   Function {frmImagePlaneUI()} {open
   } {
     Fl_Window pnl {
       label {Shape From Shade} open
-      xywh {237 248 185 375} type Double box UP_BOX align 2 resizable visible
+      xywh {418 261 185 375} type Double box UP_BOX align 2 resizable visible
     } {
       Fl_Group {} {
         label Image open
@@ -84,9 +84,9 @@ class frmImagePlaneUI {open
         xywh {5 237 135 85} box PLASTIC_UP_FRAME align 5
       }
       Fl_Input norm_x {
-        label {X:}
+        label {X:} selected
         xywh {35 248 90 22}
-        code0 {\#include <Fl/Fl_Float_Input.h>}
+        code0 {\#include <FL/Fl_Float_Input.H>}
         class Fl_Float_Input
       }
       Fl_Input norm_y {
@@ -104,7 +104,7 @@ class frmImagePlaneUI {open
         xywh {5 327 82 25}
       }
       Fl_Button build_shape_btn {
-        label Build selected
+        label Build
         xywh {95 327 82 25}
       }
     }

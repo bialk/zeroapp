@@ -1,15 +1,15 @@
 # data file for the Fltk User Interface Designer (fluid)
-version 1.0110 
+version 1.0302 
 header_name {.h} 
 code_name {.cxx}
 widget_class GLDisplay {open
-  xywh {5 31 100 100} type Double align 80 resizable
+  xywh {55 31 100 100} type Double align 80 resizable
   code0 {\#include "apputil/eventballfltk.h"}
   class Fl_Gl_Window noborder visible
 } {
-  decl {int handle(int event);} {public
+  decl {int handle(int event);} {public local
   }
-  decl {void draw(void);} {public
+  decl {void draw(void);} {public local
   }
 } 
 
@@ -17,27 +17,27 @@ widget_class MsgGroupUI {open
   xywh {759 172 175 25} type Double hide
   class Fl_Group position_relative
 } {
-  decl {int handle(int event);} {public
+  decl {int handle(int event);} {public local
   }
 } 
 
-decl {class frmMainDisplay;} {public
+decl {class frmMainDisplay;} {public local
 } 
 
 class MainDisplay {open
 } {
-  decl {public:} {public
+  decl {public:} {public local
   }
-  decl {frmMainDisplay *frmmaindisplay;} {public
+  decl {frmMainDisplay *frmmaindisplay;} {public local
   }
   Function {MainDisplay(frmMainDisplay *v)} {open
   } {
     code {frmmaindisplay = v;} {}
     Fl_Window mainwnd {
-      label {3D Zero Application  0.0.1} open
-      xywh {231 132 780 550} type Double align 0 resizable
+      label {3D Zero Application  0.0.1} open selected
+      xywh {402 138 780 550} type Double align 0 resizable
       code0 {\#include <iostream>}
-      code1 {\#include <FL/Fl_Help_Dialog.h>}
+      code1 {\#include <FL/Fl_Help_Dialog.H>}
       code2 {\#include "src/dispview.h"} visible
     } {
       Fl_Menu_Bar mainmenu {open
@@ -105,7 +105,7 @@ class MainDisplay {open
       Fl_Group {} {open
         xywh {0 25 30 525}
       } {
-        Fl_Button {} {selected
+        Fl_Button {} {
           xywh {0 25 30 30}
         }
         Fl_Group {} {open
@@ -118,7 +118,7 @@ class MainDisplay {open
       } {}
     }
     Fl_Window aboutwnd {
-      label {About 3D Plastic Surgery Simulator 0.3.0}
+      label {About 3D Plastic Surgery Simulator 0.3.0} open
       xywh {377 187 360 260} type Double hide modal
     } {
       Fl_Box aboutwndbox {
@@ -155,14 +155,14 @@ class MainDisplay {open
       }
     }
   }
-  decl {Fl_Text_Buffer msgtb;} {public
+  decl {Fl_Text_Buffer msgtb;} {public local
   }
-  decl {Fl_Help_Dialog help;} {public
+  decl {Fl_Help_Dialog help;} {public local
   }
 } 
 
 declblock {//header for sourcefile} {open public after {//end of headers}
 } {
-  decl {\#include "src/eventhnd.h"} {public
+  decl {\#include "src/eventhnd.h"} {public local
   }
 } 

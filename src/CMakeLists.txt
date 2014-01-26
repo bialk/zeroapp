@@ -28,8 +28,17 @@ IF(UNIX OR MINGW)
   FIND_PACKAGE(FLTK REQUIRED)
 
   FIND_LIBRARY(FLTK_JPEG_LIB fltk_jpeg)
+  #if fltk_jpeg not found this line will search system lib
+  FIND_LIBRARY(FLTK_JPEG_LIB jpeg)
+
   FIND_LIBRARY(FLTK_PNG_LIB fltk_png)
-  FIND_LIBRARY(FLTK_ZLIB_LIB fltk_zlib)
+  #if fltk_png not found this line will search system lib
+  FIND_LIBRARY(FLTK_PNG_LIB png)
+
+  FIND_LIBRARY(FLTK_ZLIB_LIB fltk_z)
+  #if fltk_zlib not found this line will search system lib
+  FIND_LIBRARY(FLTK_ZLIB_LIB z)
+
   FIND_LIBRARY(FLU_LIB flu flu)
   FIND_LIBRARY(FLUGL_LIB flu_gl)
 
