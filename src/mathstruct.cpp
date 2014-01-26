@@ -2,7 +2,7 @@
 #include <windows.h>
 #endif
 
-#include <Fl/gl.h>
+#include <FL/gl.h>
 
 #include "eventlog.h"
 #include "mathstruct.h"

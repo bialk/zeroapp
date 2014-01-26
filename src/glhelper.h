@@ -4,7 +4,7 @@
 #include "mathlib/mathutl/mymath.h"
 #include "mathlib/mathutl/meshandalg.h"
 #include "mathlib/mathutl/imageandfft.h"
-#include <Fl/gl.h>
+#include <FL/gl.h>
 
 
 

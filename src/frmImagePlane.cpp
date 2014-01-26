@@ -3,7 +3,7 @@
 #include "frmMainDisplay.h"
 #include "frmMainDisplayUI.h"
 #include "apputil/serializer.h"
-#include <Fl/Fl_File_Chooser.h>
+#include <FL/Fl_File_Chooser.H>
 
 
 void frmImagePlane::TreeScan(TSOCntx* cntx){

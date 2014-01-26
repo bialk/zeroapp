@@ -2,7 +2,7 @@
 #include "windows.h"
 #endif
 
-#include <Fl/gl.h>
+#include <FL/gl.h>
 #include <GL/glu.h>
 
 #include "glhelper.h"

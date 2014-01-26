@@ -3,7 +3,7 @@
 #include "apputil/serializer.h"
 #include "apputil/AppSysSet.h"
 #include "dispview.h"
-#include <Fl/Fl_File_Chooser.h>
+#include <FL/Fl_File_Chooser.H>
 #include "fltk_animator.h"
 #include "fltk_defs.h"
 #include "frmMainDisplayUI.h"

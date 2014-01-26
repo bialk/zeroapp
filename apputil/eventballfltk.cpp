@@ -1,5 +1,5 @@
 #include "apputil/eventballfltk.h"
-#include <Fl/Fl.h>
+#include <FL/Fl.H>
 
 void EventBallFltk::Handle(int evt){    
   int key;

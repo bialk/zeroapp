@@ -2,7 +2,7 @@
 #define dispview_h
 
 #include <list>
-#include <Fl/gl.h>
+#include <FL/gl.h>
 #include "editviewobj.h"
 #include "eventhnd.h"
 #include <sigc++/sigc++.h>
