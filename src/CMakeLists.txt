@@ -319,6 +319,7 @@ fltk_wrap_ui(
     frmSurfCtrlUI.fl
     frmMainDisplayUI.fl
     frmPrjTreeUI.fl
+    frmPrjTreeUI2.fl
     frmViewCtrlUI.fl
 )
 

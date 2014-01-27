@@ -11,13 +11,14 @@
 #include "frmMatting.h"
 
 frmPrjTree::frmPrjTree(frmMainDisplay *f):
-  frmmain(f),
+  frmmain(f),  
   frmviewctrl(new frmViewCtrl(f)),
   frmsurfctrl(new frmSurfCtrl(f)),
   frmimageplane(new frmImagePlane(f)),
   frmmatting(new frmMatting(f)),
   //insert here for new panel
-  ww(0){}
+  ww(0)
+  {}
 
 frmPrjTree::~frmPrjTree(){}
 
@@ -28,6 +29,18 @@ void frmPrjTree::Init(){
   frmimageplane->Init();
   frmmatting->Init();
   //insert here for new panel
+
+  ui2.reset(new frmPrjTreeUI2);
+  //ui2->tree->activate();
+  ui2->win->show();
+  ui2->tree->show();
+  ui2->tree->showroot(1);
+  ui2->tree->root_label("Scene");
+  ui2->tree->add("View");
+  ui2->tree->add("SFS Builder");
+  ui2->tree->add("Matting");
+  ui2->tree->add("Surface");
+  CONNECT(ui2->tree,frmPrjTree::tree_event2);
 
   CONNECT(ui.tree,frmPrjTree::tree_event);
 
@@ -112,6 +125,61 @@ void frmPrjTree::SyncUI(){
   frmimageplane->SyncUI();
   frmmatting->SyncUI();
   //insert here for new panel
+}
+
+void
+frmPrjTree::tree_event2(Fl_Widget* w, void* v)
+{
+   Fl_Tree *tree = static_cast<Fl_Tree*>(w);
+   Fl_Tree_Item *item = tree->callback_item();    // the item changed (can be NULL if more than one item was changed!)
+   switch ( tree->callback_reason() ) {           // reason callback was invoked
+   case     FL_TREE_REASON_OPENED:
+      printf("..item was opened..\n");
+      break;
+   case FL_TREE_REASON_CLOSED:
+      printf("..item was closed..\n");
+      break;
+   case FL_TREE_REASON_SELECTED:
+      frmmain->eventball.lastev=Q_DEL;
+      frmmain->ehq_scene.top().Handle(&frmmain->eventball);
+      frmmain->ehq_scene.top().clear();
+
+      printf("..item was selected..\n");
+      if(std::string(item->label()) == "View")
+         frmviewctrl->select(true);
+      else if(std::string(item->label()) == "Surface")
+         frmsurfctrl->select(true);
+      else if(std::string(item->label()) == "SFS Builder"){
+         // select ui panel
+         frmimageplane->select(true);
+         // add event handler to the scene queue
+         frmmain->ehq_scene.top().ins_top(&frmmain->dv->imageplane->eh);
+         frmmain->eventball.lastev=Q_ADD;
+         frmmain->dv->imageplane->eh.Handle(&frmmain->eventball);
+      }
+      else if(std::string(item->label()) == "Matting"){
+         frmmatting->select(true);
+         frmmain->ehq_scene.top().ins_top(&frmmain->dv->matting->eh);
+         frmmain->eventball.lastev=Q_ADD;
+         frmmain->dv->matting->eh.Handle(&frmmain->eventball);
+      }
+
+      break;
+      //case FL_TREE_REASON_RESELECTED:
+      //  printf("..item was reselected (double-clicked, etc)..\n");
+      //     break;
+   case FL_TREE_REASON_DESELECTED:
+      if(std::string(item->label()) == "View")
+         frmviewctrl->select(false);
+      else if(std::string(item->label()) == "Surface")
+         frmsurfctrl->select(false);
+      else if(std::string(item->label()) == "SFS Builder")
+         frmimageplane->select(false);
+      else if(std::string(item->label()) == "Matting")
+         frmmatting->select(false);
+      printf("..item was deselected..\n");
+      break;
+   }
 }
 
 void frmPrjTree::tree_event(Fl_Widget* w, void* v){
