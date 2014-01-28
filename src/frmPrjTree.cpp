@@ -10,15 +10,16 @@
 #include "frmImagePlane.h"
 #include "frmMatting.h"
 
-frmPrjTree::frmPrjTree(frmMainDisplay *f):
-  frmmain(f),  
-  frmviewctrl(new frmViewCtrl(f)),
-  frmsurfctrl(new frmSurfCtrl(f)),
-  frmimageplane(new frmImagePlane(f)),
-  frmmatting(new frmMatting(f)),
+frmPrjTree::frmPrjTree(frmMainDisplay *f)
+  : frmmain(f)
+  , frmviewctrl(new frmViewCtrl(f))
+  , frmsurfctrl(new frmSurfCtrl(f))
+  , frmimageplane(new frmImagePlane(f))
+  , frmmatting(new frmMatting(f))
   //insert here for new panel
-  ww(0)
-  {}
+  , ww(0)
+  , wx2(-1), wy2(-1),ww2(-1),wh2(-1)
+{}
 
 frmPrjTree::~frmPrjTree(){}
 
@@ -32,8 +33,6 @@ void frmPrjTree::Init(){
 
   ui2.reset(new frmPrjTreeUI2);
   //ui2->tree->activate();
-  ui2->win->show();
-  ui2->tree->show();
   ui2->tree->showroot(1);
   ui2->tree->root_label("Scene");
   ui2->tree->add("View");
@@ -41,6 +40,9 @@ void frmPrjTree::Init(){
   ui2->tree->add("Matting");
   ui2->tree->add("Surface");
   CONNECT(ui2->tree,frmPrjTree::tree_event2);
+
+  ui2->win->show();
+  ui2->tree->show();
 
   CONNECT(ui.tree,frmPrjTree::tree_event);
 
@@ -89,6 +91,7 @@ void frmPrjTree::TreeScan(TSOCntx* cntx){
     // window positioning
     if(ww && wh){
       ui.main->resize(wx,wy,ww,wh);
+      ui2->win->resize(wx2,wy2,ww2,wh2);
       //ui.tree->resize(0,0,ww,sliderh);
       //ui.panel->resize(0,wh,ww,wh-sliderh);
     }
@@ -98,6 +101,12 @@ void frmPrjTree::TreeScan(TSOCntx* cntx){
     wy=ui.main->y();
     ww=ui.main->w();
     wh=ui.main->h();
+
+    wx2=ui2->win->x();
+    wy2=ui2->win->y();
+    ww2=ui2->win->w();
+    wh2=ui2->win->h();
+
     //sliderh = ui.tree->h();
   }
   frmviewctrl->TreeScan(cntx);
@@ -111,6 +120,10 @@ void frmPrjTree::AskForData(Serializer *s){
   s->Item("wy", Sync(&wy));
   s->Item("ww", Sync(&ww));
   s->Item("wh", Sync(&wh));
+  s->Item("wx2", Sync(&wx2));
+  s->Item("wy2", Sync(&wy2));
+  s->Item("ww2", Sync(&ww2));
+  s->Item("wh2", Sync(&wh2));
   s->Item("sliderh", Sync(&sliderh));
   s->Item("frmviewctrl", Sync(&*frmviewctrl));
   s->Item("frmsurfctrl", Sync(&*frmsurfctrl));

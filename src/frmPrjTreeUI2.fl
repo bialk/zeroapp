@@ -4,7 +4,7 @@ header_name {.h}
 code_name {.cxx}
 class frmPrjTreeUI2 {open
 } {
-  Function {frmPrjTreeUI2()} {open
+  Function {frmPrjTreeUI2()} {open selected
   } {
     Fl_Window win {open
       xywh {557 203 320 425} type Double resizable visible

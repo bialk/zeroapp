@@ -18,6 +18,8 @@ class Serializer;
 class frmPrjTree{
  public:
   int wx,wy,ww,wh,sliderh;
+  int wx2,wy2,ww2,wh2;
+
   frmPrjTreeUI ui;
   std::auto_ptr<frmPrjTreeUI2> ui2;
   frmMainDisplay                *frmmain;
