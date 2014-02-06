@@ -299,7 +299,7 @@ fltk_wrap_ui(
     frmMattingUI.fl
     frmSurfCtrlUI.fl
     frmMainDisplayUI.fl
-    frmPrjTreeUI2.fl
+    frmPrjTreeUI.fl
     frmViewCtrlUI.fl
 )
 
