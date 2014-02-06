@@ -92,8 +92,8 @@ private:
    static signed char const m_base64DecodeChars[];
 
    std::vector<char> buf;
-   int bufBeginOff;
-   int bufEndOff;
+   unsigned bufBeginOff;
+   unsigned bufEndOff;
 };
 
 class StorageStreamSimpleBinary:public StorageStream{
@@ -322,7 +322,7 @@ public:
 
 template<class T> inline SyncDataInterface* Sync(T *t){
    return  new CSyncObj<T>(t);   
-};
+}
 
 
 // syncronizers for scalar variables
@@ -377,19 +377,19 @@ public:
 
 template<> inline SyncDataInterface* Sync<double>(double *t){
    return new CSyncVar<double>(t);
-};
+}
 
 template<> inline SyncDataInterface* Sync<float>(float *t){
    return new CSyncVar<float>(t);
-};
+}
 
 template<> inline SyncDataInterface* Sync<int>(int *t){
    return new CSyncVar<int>(t);
-};
+}
 
 template<> inline SyncDataInterface* Sync<char>(char *t){
    return new CSyncVarAsOtherType<char,int>(t);
-};
+}
 
 
 // syncronizers for cstring variables
@@ -406,7 +406,7 @@ public:
 
 inline SyncDataInterface* Sync(char *t, int sz){
    return new CSync_CStr(t,sz);
-};
+}
 
 
 // syncronizers for std::string type
@@ -438,7 +438,7 @@ public:
 
 inline SyncDataInterface* Sync(std::string *t){
    return new CSync_STLStr(t);
-};
+}
 
 
 // syncronizes a sequence of primitive types (char, int, float, ...)
@@ -490,8 +490,8 @@ inline SyncDataInterface* SyncPacked(std::vector<double> *t){
 // syncronizers for plain vector container
 template<class T> class CSyncVector:public SyncDataInterface{
 public:
-   int sz;
    T *obj;
+   int sz;
    CSyncVector(T *t, int n): obj(t), sz(n){}
    void Load(Serializer *s){
       int size=0, i=0;
@@ -812,7 +812,7 @@ public:
 //Syncronizer Dynamical Pointer
 template<class T> inline SyncDataInterface* SyncPtr(T *&t){
    return  new CSyncPtr<T>(t);   
-};
+}
 
 
 template<class T> class CSrlzPtr{

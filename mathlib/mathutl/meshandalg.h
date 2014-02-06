@@ -233,7 +233,7 @@ inline int SurfTxtrStore(SurfTxtr *stxt, const char * filename){
     err_printf(("Can't open texture file '%s' \n",filename));
     return 1;
   }
-  fprintf(f,"%i %i\n",stxt->trg.size(),stxt->tx.size());
+  fprintf(f,"%lu %lu\n",stxt->trg.size(),stxt->tx.size());
 
   std::vector<Surf::TTrg>::iterator it;
   for(it=stxt->trg.begin();it!=stxt->trg.end();it++)
@@ -254,14 +254,14 @@ inline int SurfTxtrLoad(SurfTxtr *stxt, const char *filename){
   }
 
   stxt->clear();
-  char line[1024],test[1024], *s,*r;
+  char line[1024],test[1024], *s;
   fgets(line,1024,f); strcpy(test,line);
   s=strtok(line," "); if(!s) { err_printf(("Format error in line\"%s\" \n",test)); return 1; }
   stxt->trg.resize(atoi(s));
   s=strtok(0," \n"); if(!s) { err_printf(("Format error in line\"%s\" \n",test)); return 1; }
   stxt->tx.resize(atoi(s));
 
-  int i;
+  unsigned int i;
   for(i=0;i<stxt->trg.size();i++){
     Surf::TTrg &trg = stxt->trg[i];
     fgets(line,1024,f); strcpy(test,line);
@@ -351,7 +351,6 @@ inline int SurfLoad_WaveFrontObj(Surf *surf, SurfTxtr *stxr, const char *filenam
       s=mystrtok_r(0,"/",&r);
       tt.i1=atoi(s)-1;
       s=mystrtok_r(0,"/",&r);
-      atoi(s);
 
       s=strtok(0," \n");  if(!s) { err_printf(("line format error: %s\n",test)); return 1; }
       s=mystrtok_r(s,"/",&r);
@@ -359,7 +358,6 @@ inline int SurfLoad_WaveFrontObj(Surf *surf, SurfTxtr *stxr, const char *filenam
       s=mystrtok_r(0,"/",&r);
       tt.i2=atoi(s)-1;
       s=mystrtok_r(0,"/",&r);
-      atoi(s);
 
       s=strtok(0," \n");  if(!s) { err_printf(("line format error: %s\n",test)); return 1; }
       s=mystrtok_r(s,"/",&r);
@@ -367,7 +365,6 @@ inline int SurfLoad_WaveFrontObj(Surf *surf, SurfTxtr *stxr, const char *filenam
       s=mystrtok_r(0,"/",&r);
       tt.i3=atoi(s)-1;
       s=mystrtok_r(0,"/",&r);
-      atoi(s);
 
       surf->trg.push_back(t);
       if(stxr)
@@ -503,7 +500,6 @@ public:
 
     // insert vertices inside triangles
     sz=src->trg.size();
-    int vidx = 0;
     float w = 1.0/(n-1);
     for(i=0;i<sz;i++){
       Surf::TTrg *trg = &src->trg[i];
@@ -625,8 +621,8 @@ public:
 
   }
   void pairinit(){
-    int i;
-    int sz=surf->vtx.size();
+    unsigned int i;
+    unsigned int sz=surf->vtx.size();
     ipairs.resize(surf->vtx.size());
     for(i=0;i<sz;i++) ipairs[i]=0;
 
@@ -639,7 +635,7 @@ public:
     }
 
     sz=surf->vtx.size();
-    int sumidx=0;
+    unsigned int sumidx=0;
     for(i=0;i<surf->vtx.size();i++){
       int n = ipairs[i];
       ipairs[i]=sumidx; 
@@ -791,9 +787,9 @@ public:
 	Ptn p1 = vtx1.p * vtx1.d + surf->cnt;
 	Ptn p2 = vtx2.p * vtx2.d + surf->cnt;
 	Ptn p3 = vtx3.p * vtx3.d + surf->cnt;
-	Ptn pp1 = p1; pp1.z=0;
-	Ptn pp2 = p2; pp2.z=0;
-	Ptn pp3 = p3; pp3.z=0;
+   //Ptn pp1 = p1; pp1.z=0;
+   //Ptn pp2 = p2; pp2.z=0;
+   //Ptn pp3 = p3; pp3.z=0;
 
 	//float nx,ny,nz;
 	//vnormal2(nx,nz,ny,
@@ -834,7 +830,7 @@ public:
 	printf("Not even number of boundaries (size=%i)\n",(int)bndflat[i].size());
       std::sort(bndflat[i].begin(),bndflat[i].end());      
       //printf("%i: ",i);
-      int j; 
+      unsigned int j;
       float prev=0;
       for(j=0;j<bndflat[i].size();j++){
 	//printf("%f ",bndflat[i][j]);	

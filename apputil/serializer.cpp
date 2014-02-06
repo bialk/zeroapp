@@ -716,7 +716,9 @@ void StorageStreamIndexedBinary::PutItem(void const* v, int n){
 //SimpleXML storage
 ////////////////////
 
-StorageStreamSimpleXML::StorageStreamSimpleXML():tabsz(1),f(NULL){
+StorageStreamSimpleXML::StorageStreamSimpleXML()
+   :f(NULL)
+   ,tabsz(1){
    buf.resize(4096, '\0');
    strbegin = strend = &buf[0];
    bufBeginOff = 0;

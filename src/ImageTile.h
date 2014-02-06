@@ -17,7 +17,7 @@ class GLTexSetHandle{
       texid.clear();
     }
   }
-  void resize(int i){
+  void resize(unsigned int i){
     if(texid.size()!=i){
       clear();
       texid.resize(i);

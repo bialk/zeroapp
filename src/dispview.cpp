@@ -39,15 +39,18 @@ void GLScene::Remove(EditViewObj* globj){
 // class DispView
 //=====================================================================
 
-DispView::DispView():
-glnamecount(0),noredisplay(0),drawsimple(0),nsnap(0),selectid(-1),
-viewctrl(new ViewCtrl),
-lights(new Lights),
-viewsurf(new ViewSurf),
-imageplane(new ImagePlane),
-matting(new Matting),
-toolpanel(new ToolPanel),
-dispvieweh(this)
+DispView::DispView()
+   : noredisplay(0),drawsimple(0)
+   , toolpanel(new ToolPanel)
+   , viewctrl(new ViewCtrl)
+   , lights(new Lights)
+   , viewsurf(new ViewSurf)
+   , imageplane(new ImagePlane)
+   , matting(new Matting)
+   , glnamecount(0)
+   , selectid(-1)
+   , nsnap(0)
+   , dispvieweh(this)
 {
   SelectRst();
   viewctrl->dv=this;

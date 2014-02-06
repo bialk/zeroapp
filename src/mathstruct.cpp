@@ -33,11 +33,11 @@ void D3DG1obj::open(const char* filename){
     fscanf(f,"%i",&k); 
     switch(k){
     case 3:
-      fscanf(f,"%i %i %i %x", &i1, &i2, &i3, &c);  
+      fscanf(f,"%i %i %i %x", &i1, &i2, &i3, (unsigned int*)&c);
       triangle(i1,i2,i3,c);
       break;
     case 4: 
-      fscanf(f,"%i %i %i %i %x",  &i1, &i2, &i3, &i4, &c); 
+      fscanf(f,"%i %i %i %i %x",  &i1, &i2, &i3, &i4, (unsigned int*)&c);
       quadriple(i1,i2,i3,i4,c);
       break;
     }
@@ -49,10 +49,6 @@ void D3DG1obj::triangle(int i1, int i2, int i3, int c){
   glBegin(GL_TRIANGLES);
   Ptn &vtx1 = vtx[i1];  Ptn &vtx2 = vtx[i2]; Ptn &vtx3 = vtx[i3];
   float x,y,z;
-  union U{
-    int c;
-    struct { unsigned char r,g,b; };
-  } rgba; rgba.c = c;
   vnormal2(x,y,z,
 	   vtx2.x,vtx2.y,vtx2.z,
 	   vtx3.x,vtx3.y,vtx3.z,

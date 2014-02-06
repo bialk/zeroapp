@@ -139,7 +139,7 @@ void CompoundTexture::Map(float x, float y){
   int Texture::Load(const char *name){
     rgbimg<float> rgb;
     if(LoadPPM(rgb,name)) return 1;
-    int i;
+    unsigned int i;
     for(i=0;i<rgb.size();i++)  rgb[i]/=255;
     cmpdtxtr.SetTexture(&rgb[0],rgb.szx,rgb.szy,4);
     return 0;
@@ -167,7 +167,7 @@ void CompoundTexture::Map(float x, float y){
     return 1;
   }
   void Surf2GL::SmoothNorms(){
-    int k,n;
+    unsigned int k,n;
     norms.resize(surf->vtx.size());
     Ptn null = {0,0,0};
     std::fill(norms.begin(), norms.end(), null);
@@ -431,7 +431,7 @@ void print_matrixd(double *m,int row, int col){
   int i,j;
   for(i=0;i<row;i++){
     for(j=0;j<col;j++){
-       printf("%lf ",m[i+j*row]);
+       printf("%f ",m[i+j*row]);
     }
     printf("\n");
   }

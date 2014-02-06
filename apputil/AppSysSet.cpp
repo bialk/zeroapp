@@ -38,7 +38,7 @@ void AppSysSet::Init(int argc, char **argv){
    str[length] = '\0';
    path_app=str;
    size_t pos = path_app.find_last_of("/",path_app.size());
-   if(pos==-1)
+   if(pos==path_app.npos)
       path_app="."; 
    else
       path_app.replace(pos,path_app.size(),"");

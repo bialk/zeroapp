@@ -10,7 +10,7 @@ void ToolPanel::Add(EditViewObj * ic){
 
 void ToolPanel::Draw(DrawCntx *cntx){
   if (!show) return;
-  int i;
+  unsigned int i;
   for( i=0; i<iconvector.size();i++){
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();

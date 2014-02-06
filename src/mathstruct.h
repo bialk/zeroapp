@@ -30,7 +30,7 @@ public:
   float cx,cy,cz;
 
   BoundFinder *bf;
-  SpherePointsGenerator():nalf(0),dist(0),bf(0),cx(0),cy(0),cz(0){};
+  SpherePointsGenerator():nalf(0),dist(0),cx(0),cy(0),cz(0),bf(0){};
   ~SpherePointsGenerator(){Destroy();};
   virtual void point(float x,float y, float z){};
   

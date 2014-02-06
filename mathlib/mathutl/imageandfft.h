@@ -34,7 +34,7 @@ int LoadPPM(rgbimg<T> &rgb,const char *name="test.ppm"){
   if(!&rgb) {err_printf(("LoadPPM: input array is zero\n")); return 1;}
   FILE *h = fopen(name,"rb");    
   if(!h) {err_printf(("LoadPPM: can't open file (check the filename (\"%s\")\n",name)); return 1;}
-  char s[255]; int k;
+  char s[255];
   //fscanf(h,"%s\n%i %i\n",s,&rgb.szx,&rgb.szy);
   
   fgets(s,255,h); s[2]=0;
@@ -85,6 +85,6 @@ void TorusShift(rgbimg<T> &rgb , int x, int y){
       rgb[idx2+2]=rgb2[idx+2];
     }
   }
-};
+}
 
 #endif //image and fft

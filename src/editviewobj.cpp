@@ -3,7 +3,7 @@
 // class TSOCntx (TreeScanOperCntx)
 //================================================
 
-TSOCntx::~TSOCntx(){};
+TSOCntx::~TSOCntx(){}
 
 TSOCntx TSOCntx::TSO_LayoutStore;
 TSOCntx TSOCntx::TSO_LayoutLoad;

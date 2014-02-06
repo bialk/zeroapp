@@ -39,7 +39,7 @@ template<class T> void set_signal(Fl_Widget *w, T *o, void (T::*f)(Fl_Widget *, 
   t->f_ptr=f;
   fltk_calllist[w]=t;
   w->callback(fl_callback);  
-};
+}
 
 template<typename T> class fltk_connectors: public  std::list<fltk_connector<T> >{
  public:
