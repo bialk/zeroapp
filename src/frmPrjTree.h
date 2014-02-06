@@ -1,7 +1,6 @@
 #ifndef frmPrjTree_h
 #define frmPrjTree_h
 
-#include "frmPrjTreeUI.h"
 #include "frmPrjTreeUI2.h"
 #include "fltk_calllist.h"
 #include <memory>
@@ -18,10 +17,8 @@ class Serializer;
 class frmPrjTree{
  public:
   int wx,wy,ww,wh,sliderh;
-  int wx2,wy2,ww2,wh2;
 
-  frmPrjTreeUI ui;
-  std::auto_ptr<frmPrjTreeUI2> ui2;
+  std::auto_ptr<frmPrjTreeUI2> ui;
   frmMainDisplay                *frmmain;
   std::auto_ptr<frmViewCtrl>    frmviewctrl;
   std::auto_ptr<frmSurfCtrl>    frmsurfctrl;
@@ -40,7 +37,6 @@ class frmPrjTree{
 
   PUBLIC_SLOTS(frmPrjTree):
   void tree_event(Fl_Widget* o, void* v);
-  void tree_event2(Fl_Widget* o, void* v);
 };
 
 #endif

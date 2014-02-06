@@ -39,8 +39,7 @@ IF(UNIX OR MINGW)
   #if fltk_zlib not found this line will search system lib
   FIND_LIBRARY(FLTK_ZLIB_LIB z)
 
-  FIND_LIBRARY(FLU_LIB flu flu)
-  FIND_LIBRARY(FLUGL_LIB flu_gl)
+  #FIND_LIBRARY(FLUGL_LIB flu_gl)
 
 ELSEIF(WIN32)
 
@@ -112,29 +111,20 @@ ELSEIF(WIN32)
      ${FLTK_LIBRARIES}
   )
 
-  # looking for FLU library
-  FIND_PATH(FLU_INCLUDE_DIR FLU/flu_export.h PATH_SUFFIXES FLU_2.14)
-
   if(CMAKE_BUILD_TYPE MATCHES Debug)
     set(FLTK_INCLUDE_DIR ${FLTK_INCLUDE_DIR_DEBUG})
   ELSE(CMAKE_BUILD_TYPE MATCHES Debug)
     set(FLTK_INCLUDE_DIR ${FLTK_INCLUDE_DIR_RELEASE})
   ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
 
-  FIND_LIBRARY(FLU_LIBRARY_DEBUG flu
-    HINTS ${FLU_INCLUDE_DIR}/visualc/Debug
-  )
-  FIND_LIBRARY(FLU_LIBRARY_RELEASE flu
-    HINTS ${FLU_INCLUDE_DIR}/visualc/Release
-  )
-
-  set(FLU_LIB
-     debug ${FLU_LIBRARY_DEBUG}
-     optimized ${FLU_LIBRARY_RELEASE}
-  )
+  #FIND_LIBRARY(FLU_LIBRARY_DEBUG flu
+  #  HINTS ${FLU_INCLUDE_DIR}/visualc/Debug
+  #)
+  #FIND_LIBRARY(FLU_LIBRARY_RELEASE flu
+  #  HINTS ${FLU_INCLUDE_DIR}/visualc/Release
+  #)
 
 ENDIF(UNIX OR MINGW)
-INCLUDE_DIRECTORIES( ${FLU_INCLUDE_DIR} )
 INCLUDE_DIRECTORIES( ${FLTK_INCLUDE_DIR} )
 
 
@@ -318,7 +308,6 @@ fltk_wrap_ui(
     frmMattingUI.fl
     frmSurfCtrlUI.fl
     frmMainDisplayUI.fl
-    frmPrjTreeUI.fl
     frmPrjTreeUI2.fl
     frmViewCtrlUI.fl
 )
@@ -400,7 +389,6 @@ ADD_DEFINITIONS(
 
 TARGET_LINK_LIBRARIES(zeroapp 
   ${SPOOLES_LIB}
-  ${FLU_LIB}
   ${FLTK_LIBRARIES}
   ${FLTK_ZLIB_LIB}
   ${FLTK_JPEG_LIB}
