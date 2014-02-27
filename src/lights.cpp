@@ -170,7 +170,7 @@ void Lights::reselect(){
 
 
 void Lights::select(){
-  int stack[]={0};
+  unsigned int stack[]={0};
   int id = dv->viewctrl->ProcessHits2(0, stack);
   
   selectid=id;
@@ -209,7 +209,7 @@ void Lights::lightrstop(){
 // class LightsEH
 //=====================================================================
 
-LightsEH::LightsEH(Lights *v):state_drag(-1),gl(v){}
+LightsEH::LightsEH(Lights *v):gl(v),state_drag(-1){}
 
 
 int LightsEH::glName(int id){

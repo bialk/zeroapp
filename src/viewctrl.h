@@ -43,7 +43,7 @@ class ViewCtrl: public EditViewObj{
   GLint hits;
   GLuint selectBuf[1024];
   void SelectObj2(int x, int y);
-  int ProcessHits2(int stackdepth, int* stacknames);
+  int ProcessHits2(unsigned int stackdepth, unsigned int *stacknames);
 
   int SelectObj(int x, int y);
 

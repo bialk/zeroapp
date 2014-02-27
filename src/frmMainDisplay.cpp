@@ -69,10 +69,10 @@ void Layout::AskForData(Serializer *s){
 }  
 
 
-frmMainDisplay::frmMainDisplay(DispView *v):
-  ui(0),
-  frmprjtree(0),
-  dv(v)
+frmMainDisplay::frmMainDisplay(DispView *v)
+  :dv(v)
+  ,ui(0)
+  ,frmprjtree(0)
 {  
   lout.mwndw=0;
 }
@@ -350,13 +350,12 @@ static pthread_mutex_t eventlog_mutex;
 
 StackBuffer::StackBuffer(){
 
-  int                   rc=0;
   pthread_mutexattr_t   mta;
 
-  rc = pthread_mutexattr_init(&mta);
-  rc = pthread_mutexattr_settype(&mta, PTHREAD_MUTEX_RECURSIVE);
-  //rc = pthread_mutexattr_setname_np(&mta, "RECURSIVE ONE");
-  rc = pthread_mutex_init(&eventlog_mutex, &mta);
+  pthread_mutexattr_init(&mta);
+  pthread_mutexattr_settype(&mta, PTHREAD_MUTEX_RECURSIVE);
+  //pthread_mutexattr_setname_np(&mta, "RECURSIVE ONE");
+  pthread_mutex_init(&eventlog_mutex, &mta);
 
   buffer[0]=0;
   //debugout.connect(sigc::mem_fun(this, &StackBuffer::text2buffer));

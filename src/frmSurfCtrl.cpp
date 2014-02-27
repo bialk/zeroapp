@@ -9,14 +9,16 @@
 #include "apputil/serializer.h"
 
 frmSurfCtrl::frmSurfCtrl(frmMainDisplay *f):
-  frmmain(f),
   w_w(0),
   ui(new frmSurfCtrlUI),
-  editslotlinks(new frmEditSlotLinks){
+  editslotlinks(new frmEditSlotLinks),
+  frmmain(f),
+  viewsurf(frmmain->dv->viewsurf.get())
+{
   ui->pnl->label("Surface");
   ui->pnl->position(20,20);
-  viewsurf = frmmain->dv->viewsurf.get();
 }
+
 frmSurfCtrl::~frmSurfCtrl(){}
 
 

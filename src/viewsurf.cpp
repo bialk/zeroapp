@@ -182,8 +182,8 @@ void ViewSurf::BuildGLList(){
 ViewSurf::~ViewSurf(){ }
 
 ViewSurf::ViewSurf():
-  gllist(0),show(0),norm_smooth_on(0),
-  texture_on(0),is_clip(0),glroshow(0),
+  show(0),is_clip(0),norm_smooth_on(0),
+  texture_on(0),gllist(0),glroshow(0),
   viewsurfeh(this){}
 
 void ViewSurf::DrawFrame(){}

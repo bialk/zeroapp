@@ -331,9 +331,10 @@ void ViewCtrl::SelectObj2(int x, int y) {
 }
 
 /* processHits prints out the contents of the * selection array. */ 
-int ViewCtrl::ProcessHits2 (int stackdepth, int* stacknames) { 
+int ViewCtrl::ProcessHits2 (unsigned int stackdepth, unsigned int* stacknames) {
 
-  unsigned int i, j; 
+  int i;
+  unsigned int j;
   float maxz1=1e10;
   GLuint maxname = 0;
   GLuint names, name, *ptr; 
@@ -349,7 +350,6 @@ int ViewCtrl::ProcessHits2 (int stackdepth, int* stacknames) {
     //printf(" z2 is %g\n", (float) *ptr/0x7fffffff); 
     ptr++; 
     //printf (" names are "); 
-    GLuint *stack=ptr;
     int count = stackdepth+1;
     int depthname;
     for (j = 0; j < names; j++) { 
@@ -371,7 +371,7 @@ int ViewCtrl::ProcessHits2 (int stackdepth, int* stacknames) {
 
 
 int ViewCtrl::SelectObj(int x, int y){
-  int stack[]={0};
+  unsigned int stack[]={0};
   SelectObj2(x,y);
   return ProcessHits2(0, stack);
 }
@@ -383,7 +383,7 @@ int ViewCtrl::SelectObj(int x, int y){
 // ===================================================================
 
 
-ViewCtrlEH::ViewCtrlEH(ViewCtrl*v):state_drag(-1),vc(v){}
+ViewCtrlEH::ViewCtrlEH(ViewCtrl*v):vc(v),state_drag(-1){}
 
 
 void ViewCtrlEH::Handle(EventBall *eventball){
@@ -393,8 +393,6 @@ void ViewCtrlEH::Handle(EventBall *eventball){
     int x=eventball->x;
     int y=eventball->y;
     glViewport(0,0,x,y);      
-    static int once=1;
-    int iobj;
 
     vc->mssh.wndw=x; vc->mssh.wndh=y;
     vc->SetProjectionMatrix();
